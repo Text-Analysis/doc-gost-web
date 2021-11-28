@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 export interface IData {
-    section_name: string;
+    name: string;
     text?: string;
-    sub_sections?: IData[];
+    children?: IData[];
 }
 
 export const getData = () => {
