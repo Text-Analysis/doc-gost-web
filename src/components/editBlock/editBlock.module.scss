@@ -1,0 +1,12 @@
+.editBlock{
+  display: flex;
+  width: 80vw;
+  height: 100vh;
+  flex-direction: column;
+  .actions{
+    display: flex;
+    flex-direction: row;
+    margin-top: 10vw;
+    margin-left: 10vw;
+  }
+}

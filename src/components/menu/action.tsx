@@ -1,12 +1,7 @@
-import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
+import React from 'react';
 import styles from './menu.module.scss';
 import cn from 'classnames';
-
-interface IAction
-    extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-    children: React.ReactNode;
-    active: boolean;
-}
+import { IAction } from '../../types/components';
 
 const Action: React.FC<IAction> = ({ children, active, ...props }) => {
     return (

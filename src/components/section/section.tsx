@@ -1,14 +1,8 @@
-import React, { DetailedHTMLProps, HTMLAttributes, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import styles from './section.module.scss';
 import { ReactComponent as Arrow } from '../../assets/arrow.svg';
 import cn from 'classnames';
-
-export interface ISection
-    extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-    children?: React.ReactNode;
-    title: string;
-    text?: string;
-}
+import { ISection } from '../../types/components';
 
 export const Section: React.FC<ISection> = ({
     title,
@@ -18,7 +12,11 @@ export const Section: React.FC<ISection> = ({
 }) => {
     const [activeBlock, setActiveBlock] = useState<boolean>(false);
     const [activeText, setActiveText] = useState<boolean>(false);
+    const [valueInput, setValueInput] = useState<string>(title);
 
+    const changeValueInput = (e: ChangeEvent<HTMLInputElement>) => {
+        setValueInput(e.target.value);
+    };
     return (
         <div
             className={cn(styles.section, {
@@ -27,7 +25,7 @@ export const Section: React.FC<ISection> = ({
             {...props}
         >
             <div className={styles.titleBlock}>
-                <input placeholder={title} />
+                <input value={valueInput} onChange={changeValueInput} />
                 <Arrow
                     className={cn({ [styles.activeSvg]: activeBlock })}
                     onClick={() => setActiveBlock((state) => !state)}
@@ -46,7 +44,7 @@ export const Section: React.FC<ISection> = ({
                             onClick={() => setActiveText((state) => !state)}
                         />
                     </div>
-                    <textarea>{text}</textarea>
+                    <textarea defaultValue={text} />
                 </div>
             )}
             {children}

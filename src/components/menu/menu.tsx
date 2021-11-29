@@ -1,11 +1,7 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import styles from './menu.module.scss';
 import Action from './action';
-
-interface IMenu {
-    setSection: Dispatch<SetStateAction<number>>;
-    activeSection: number;
-}
+import { IMenu } from '../../types/components';
 
 export const Menu: React.FC<IMenu> = ({ activeSection, setSection }) => {
     return (
