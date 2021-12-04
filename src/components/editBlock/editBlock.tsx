@@ -6,11 +6,12 @@ import styles from './editBlock.module.scss';
 import { LayoutTree } from '../tree/tree';
 import { Select } from '../select/select';
 import { fetchDocument } from '../../store/actionCreators/document';
+import { Button } from '../button/button';
 
 export const EditBlock: React.FC = () => {
     const dispatch = useDispatch();
     const { documents } = useTypeSelector((state) => state.documentTitles);
-    const { document } = useTypeSelector((state) => state.document);
+    const { document, loading } = useTypeSelector((state) => state.document);
     const [documentId, setDocumentId] = useState<string>('');
 
     useEffect(() => {
@@ -31,8 +32,14 @@ export const EditBlock: React.FC = () => {
         <div className={styles.editBlock}>
             <div className={styles.actions}>
                 <Select data={documents} onChange={onChangeDocumentId} />
+                <Button colorBtn={'blue'}>Изменить</Button>
             </div>
             {document.structure && <LayoutTree data={document.structure} />}
+            {!document.structure && !loading && (
+                <span className={styles.notFindText}>
+                    Выберите документ, для получения информации
+                </span>
+            )}
         </div>
     );
 };

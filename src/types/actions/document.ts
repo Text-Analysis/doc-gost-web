@@ -19,6 +19,7 @@ export interface DocumentState {
 export enum DocumentActionTypes {
     FETCH_DOCUMENT = 'FETCH_DOCUMENT',
     FETCH_DOCUMENT_SUCCESS = 'FETCH_DOCUMENT_SUCCESS',
+    EDIT_SECTION_DOCUMENT = 'EDIT_SECTION_DOCUMENT',
     FETCH_DOCUMENT_ERROR = 'FETCH_DOCUMENT_ERROR',
 }
 
@@ -31,6 +32,11 @@ interface FetchDocumentActionSuccess {
     payload: IDocumentFull;
 }
 
+interface EditSectionDocument {
+    type: DocumentActionTypes.EDIT_SECTION_DOCUMENT;
+    payload: IData[];
+}
+
 interface FetchDocumentActionError {
     type: DocumentActionTypes.FETCH_DOCUMENT_ERROR;
     payload: any;
@@ -39,4 +45,5 @@ interface FetchDocumentActionError {
 export type DocumentAction =
     | FetchDocumentAction
     | FetchDocumentActionSuccess
-    | FetchDocumentActionError;
+    | FetchDocumentActionError
+    | EditSectionDocument;

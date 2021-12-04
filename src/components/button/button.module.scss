@@ -1,0 +1,28 @@
+.button {
+  border: none;
+  color: white;
+  border-radius: 6px;
+  padding: 0.5vw 1vw;
+  cursor: pointer;
+  transition: all ease 0.7s;
+}
+
+.btnBlue {
+  background: #5694F3;
+  &:hover {
+    background: #447ACC;
+  }
+}
+
+.btnGreen {
+  background: #0EC261;
+  &:hover {
+    background: #10944a;
+  }
+}
+
+.btnDisable {
+  background: #E9ECEF;
+  pointer-events:none;
+  cursor: none;
+}

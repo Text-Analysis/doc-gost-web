@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IData, IDocumentFull } from '../types/actions/document';
+import { IDocumentFull } from '../types/actions/document';
 import { RequestDocuments } from '../types/api';
 
 const instanceApi = axios.create({
@@ -15,8 +15,4 @@ export const getDocuments = () => {
 
 export const getDocument = (id: string) => {
     return instanceApi.get<IDocumentFull>(`/specifications/${id}`);
-};
-
-export const getData = () => {
-    return axios.get<IData[]>('http://localhost:3000/sections');
 };

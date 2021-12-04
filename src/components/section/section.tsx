@@ -3,6 +3,10 @@ import styles from './section.module.scss';
 import { ReactComponent as Arrow } from '../../assets/arrow.svg';
 import cn from 'classnames';
 import { ISection } from '../../types/components';
+import { useTypeSelector } from '../../hooks/useTypeSelector';
+import { useDispatch } from 'react-redux';
+import { editSectionDocument } from '../../store/actionCreators/document';
+import { Button } from '../button/button';
 
 export const Section: React.FC<ISection> = ({
     title,
@@ -11,12 +15,21 @@ export const Section: React.FC<ISection> = ({
     ...props
 }) => {
     const [activeBlock, setActiveBlock] = useState<boolean>(false);
-    const [activeText, setActiveText] = useState<boolean>(false);
-    const [valueInput, setValueInput] = useState<string>(title);
+    const [valueText, setValueText] = useState<string>('');
+    const { document } = useTypeSelector((state) => state.document);
+    const dispatch = useDispatch();
 
-    const changeValueInput = (e: ChangeEvent<HTMLInputElement>) => {
-        setValueInput(e.target.value);
+    const changeValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        const value = e.target.value;
+        setValueText(value);
     };
+
+    const editSection = (nameSection: string) => {
+        dispatch(
+            editSectionDocument(document.structure, nameSection, valueText)
+        );
+    };
+
     return (
         <div
             className={cn(styles.section, {
@@ -24,29 +37,31 @@ export const Section: React.FC<ISection> = ({
             })}
             {...props}
         >
-            <div className={styles.titleBlock}>
-                <input value={valueInput} onChange={changeValueInput} />
-                <Arrow
-                    className={cn({ [styles.activeSvg]: activeBlock })}
-                    onClick={() => setActiveBlock((state) => !state)}
-                />
-            </div>
-            {text && (
-                <div
-                    className={cn(styles.aboutBlock, {
-                        [styles.activeAboutBlock]: activeText,
-                    })}
-                >
-                    <div>
-                        <span>Содержание</span>{' '}
-                        <Arrow
-                            className={cn({ [styles.activeSvg]: activeText })}
-                            onClick={() => setActiveText((state) => !state)}
-                        />
-                    </div>
-                    <textarea defaultValue={text} />
+            <div
+                className={cn(styles.titleBlock, {
+                    [styles.activeTitleBlock]: activeBlock,
+                })}
+            >
+                <div>
+                    <span>{title}</span>
+                    <Arrow
+                        className={cn({ [styles.activeSvg]: activeBlock })}
+                        onClick={() => setActiveBlock((state) => !state)}
+                    />
                 </div>
-            )}
+                {text && (
+                    <>
+                        <textarea defaultValue={text} onChange={changeValue} />
+                        <Button
+                            colorBtn={'green'}
+                            disableBtn={!valueText}
+                            onClick={() => editSection(title)}
+                        >
+                            Сохранить
+                        </Button>
+                    </>
+                )}
+            </div>
             {children}
         </div>
     );

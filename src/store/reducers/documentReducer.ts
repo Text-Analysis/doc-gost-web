@@ -24,6 +24,11 @@ export const documentReducer = (
             };
         case DocumentActionTypes.FETCH_DOCUMENT_SUCCESS:
             return { document: action.payload, loading: false, error: null };
+        case DocumentActionTypes.EDIT_SECTION_DOCUMENT:
+            return {
+                ...state,
+                document: { ...state.document, structure: action.payload },
+            };
         case DocumentActionTypes.FETCH_DOCUMENT_ERROR:
             return {
                 document: {} as IDocumentFull,
