@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IDocumentFull } from '../types/actions/document';
+import { IData, IDocumentFull } from '../types/actions/document';
 import { RequestDocuments } from '../types/api';
 
 const instanceApi = axios.create({
@@ -15,4 +15,8 @@ export const getDocuments = () => {
 
 export const getDocument = (id: string) => {
     return instanceApi.get<IDocumentFull>(`/specifications/${id}`);
+};
+
+export const updateDocument = (id: string, obj: IData[]) => {
+    return instanceApi.put(`/specifications/${id}`, { structure: obj });
 };

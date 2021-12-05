@@ -15,6 +15,7 @@ export const Section: React.FC<ISection> = ({
     ...props
 }) => {
     const [activeBlock, setActiveBlock] = useState<boolean>(false);
+    const [isEdit, setIsEdit] = useState<boolean>(false);
     const [valueText, setValueText] = useState<string>('');
     const { document } = useTypeSelector((state) => state.document);
     const dispatch = useDispatch();
@@ -22,12 +23,14 @@ export const Section: React.FC<ISection> = ({
     const changeValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
         const value = e.target.value;
         setValueText(value);
+        setIsEdit(true);
     };
 
     const editSection = (nameSection: string) => {
         dispatch(
             editSectionDocument(document.structure, nameSection, valueText)
         );
+        setIsEdit(false);
     };
 
     return (
@@ -54,7 +57,7 @@ export const Section: React.FC<ISection> = ({
                         <textarea defaultValue={text} onChange={changeValue} />
                         <Button
                             colorBtn={'green'}
-                            disableBtn={!valueText}
+                            disableBtn={!isEdit}
                             onClick={() => editSection(title)}
                         >
                             Сохранить

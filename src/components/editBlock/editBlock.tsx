@@ -7,6 +7,7 @@ import { LayoutTree } from '../tree/tree';
 import { Select } from '../select/select';
 import { fetchDocument } from '../../store/actionCreators/document';
 import { Button } from '../button/button';
+import { updateDocument } from '../../api';
 
 export const EditBlock: React.FC = () => {
     const dispatch = useDispatch();
@@ -28,16 +29,22 @@ export const EditBlock: React.FC = () => {
         setDocumentId(e.target.value);
     };
 
+    const updateDoc = () => {
+        updateDocument(document.id, document.structure).then();
+    };
+
     return (
         <div className={styles.editBlock}>
             <div className={styles.actions}>
                 <Select data={documents} onChange={onChangeDocumentId} />
-                <Button colorBtn={'blue'}>Изменить</Button>
+                <Button colorBtn={'blue'} onClick={updateDoc}>
+                    Изменить
+                </Button>
             </div>
             {document.structure && <LayoutTree data={document.structure} />}
             {!document.structure && !loading && (
                 <span className={styles.notFindText}>
-                    Выберите документ, для получения информации
+                    Выберите документ, чтобы получить информацию
                 </span>
             )}
         </div>

@@ -16,6 +16,7 @@ export const Button: React.FC<IButton> = ({
     className,
     colorBtn,
     disableBtn,
+    ...props
 }) => {
     return (
         <button
@@ -24,6 +25,7 @@ export const Button: React.FC<IButton> = ({
                 [styles.btnGreen]: colorBtn === 'green',
                 [styles.btnDisable]: disableBtn,
             })}
+            {...props}
         >
             {children}
         </button>
