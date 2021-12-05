@@ -8,13 +8,17 @@ import { Select } from '../select/select';
 import { fetchDocument } from '../../store/actionCreators/document';
 import { Button } from '../button/button';
 import { updateDocument } from '../../api';
+import { Alert } from '../alert/alert';
 
 export const EditBlock: React.FC = () => {
     const dispatch = useDispatch();
     const { documents } = useTypeSelector((state) => state.documentTitles);
     const { document, loading } = useTypeSelector((state) => state.document);
     const [documentId, setDocumentId] = useState<string>('');
-
+    const [isAlert, setAlert] = useState<boolean>(false);
+    const [classAlert, setClassAlert] = useState<
+        'success' | 'error' | undefined
+    >(undefined);
     useEffect(() => {
         dispatch(fetchDocumentsTitle());
     }, []);
@@ -30,7 +34,15 @@ export const EditBlock: React.FC = () => {
     };
 
     const updateDoc = () => {
-        updateDocument(document.id, document.structure).then();
+        updateDocument(document.id, document.structure)
+            .then(() => {
+                setAlert(true);
+                setClassAlert('success');
+            })
+            .catch(() => {
+                setAlert(true);
+                setClassAlert('error');
+            });
     };
 
     return (
@@ -47,6 +59,16 @@ export const EditBlock: React.FC = () => {
                     Выберите документ, чтобы получить информацию
                 </span>
             )}
+            <Alert
+                className={styles.alert}
+                state={classAlert}
+                visible={isAlert}
+                onClick={() => setAlert(false)}
+            >
+                {classAlert === 'success' && 'Данные успешно обновлены'}
+                {classAlert === 'error' &&
+                    'Произошла ошибка про обновлении данных'}
+            </Alert>
         </div>
     );
 };
