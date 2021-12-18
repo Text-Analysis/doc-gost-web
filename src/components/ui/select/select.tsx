@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './select.module.scss';
 import cn from 'classnames';
-import { ISelect } from '../../types/components';
+import { ISelect } from '../../../types/components';
 
 export const Select: React.FC<ISelect> = ({ data, className, ...props }) => {
     return (

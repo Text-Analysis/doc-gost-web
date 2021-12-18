@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { EditBlock, Menu } from '../../components';
+import { CreateBlock, EditBlock, Menu } from '../../components';
 import styles from './mainPage.module.scss';
 
 export const MainPage: React.FC = () => {
@@ -9,6 +9,8 @@ export const MainPage: React.FC = () => {
         switch (activeSection) {
             case 0:
                 return <EditBlock />;
+            case 1:
+                return <CreateBlock />;
         }
     };
     return (

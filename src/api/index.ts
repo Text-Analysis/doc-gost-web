@@ -20,3 +20,11 @@ export const getDocument = (id: string) => {
 export const updateDocument = (id: string, obj: IData[]) => {
     return instanceApi.put(`/specifications/${id}`, { structure: obj });
 };
+
+export const createDocument = (name: string, obj: IData[]) => {
+    return instanceApi.post('/specifications/', { name, structure: obj });
+};
+
+export const getTemplate = (id: string) => {
+    return instanceApi.get<IDocumentFull>(`/templates/${id}`);
+};

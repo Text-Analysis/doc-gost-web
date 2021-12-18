@@ -6,7 +6,7 @@ import { ISection } from '../../types/components';
 import { useTypeSelector } from '../../hooks/useTypeSelector';
 import { useDispatch } from 'react-redux';
 import { editSectionDocument } from '../../store/actionCreators/document';
-import { Button } from '../button/button';
+import { Button } from '../ui';
 
 export const Section: React.FC<ISection> = ({
     title,
@@ -52,7 +52,7 @@ export const Section: React.FC<ISection> = ({
                         onClick={() => setActiveBlock((state) => !state)}
                     />
                 </div>
-                {text && (
+                {!children && (
                     <>
                         <textarea defaultValue={text} onChange={changeValue} />
                         <Button

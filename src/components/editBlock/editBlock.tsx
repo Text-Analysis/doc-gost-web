@@ -4,11 +4,13 @@ import { fetchDocumentsTitle } from '../../store/actionCreators/documents';
 import { useDispatch } from 'react-redux';
 import styles from './editBlock.module.scss';
 import { LayoutTree } from '../tree/tree';
-import { Select } from '../select/select';
-import { fetchDocument } from '../../store/actionCreators/document';
-import { Button } from '../button/button';
+import { Select, Button, Alert } from '../ui';
+import {
+    fetchDocument,
+    setZeroDocument,
+} from '../../store/actionCreators/document';
 import { updateDocument } from '../../api';
-import { Alert } from '../alert/alert';
+import { LayoutBlock } from '../layoutBlock/layoutBlock';
 
 export const EditBlock: React.FC = () => {
     const dispatch = useDispatch();
@@ -16,11 +18,13 @@ export const EditBlock: React.FC = () => {
     const { document, loading } = useTypeSelector((state) => state.document);
     const [documentId, setDocumentId] = useState<string>('');
     const [isAlert, setAlert] = useState<boolean>(false);
-    const [classAlert, setClassAlert] = useState<
-        'success' | 'error' | undefined
-    >(undefined);
+    const [isUpdate, setUpdate] = useState<boolean>(false);
+    const [isErrorUpdate, setErrorUpdate] = useState<boolean>(false);
     useEffect(() => {
         dispatch(fetchDocumentsTitle());
+        if (document.structure) {
+            dispatch(setZeroDocument());
+        }
     }, []);
 
     useEffect(() => {
@@ -34,23 +38,30 @@ export const EditBlock: React.FC = () => {
     };
 
     const updateDoc = () => {
+        setUpdate(true);
         updateDocument(document.id, document.structure)
             .then(() => {
+                setUpdate(false);
                 setAlert(true);
-                setClassAlert('success');
+                setErrorUpdate(false);
             })
             .catch(() => {
+                setUpdate(false);
                 setAlert(true);
-                setClassAlert('error');
+                setErrorUpdate(true);
             });
     };
 
     return (
-        <div className={styles.editBlock}>
+        <LayoutBlock>
             <div className={styles.actions}>
                 <Select data={documents} onChange={onChangeDocumentId} />
-                <Button colorBtn={'blue'} onClick={updateDoc}>
-                    Изменить
+                <Button
+                    colorBtn={'blue'}
+                    onClick={updateDoc}
+                    disableBtn={isUpdate}
+                >
+                    {isUpdate ? 'Сохраняется' : 'Изменить'}
                 </Button>
             </div>
             {document.structure && <LayoutTree data={document.structure} />}
@@ -61,14 +72,14 @@ export const EditBlock: React.FC = () => {
             )}
             <Alert
                 className={styles.alert}
-                state={classAlert}
+                isError={isErrorUpdate}
                 visible={isAlert}
                 onClick={() => setAlert(false)}
             >
-                {classAlert === 'success' && 'Данные успешно обновлены'}
-                {classAlert === 'error' &&
-                    'Произошла ошибка про обновлении данных'}
+                {isErrorUpdate
+                    ? 'Произошла ошибка при обновлении файла'
+                    : 'Файл успешно обновлён'}
             </Alert>
-        </div>
+        </LayoutBlock>
     );
 };

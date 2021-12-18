@@ -1,15 +1,7 @@
-import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
+import React from 'react';
 import styles from './button.module.scss';
 import cn from 'classnames';
-interface IButton
-    extends DetailedHTMLProps<
-        HTMLAttributes<HTMLButtonElement>,
-        HTMLButtonElement
-    > {
-    children: React.ReactNode;
-    colorBtn: 'green' | 'blue';
-    disableBtn?: boolean;
-}
+import { IButton } from '../../../types/components';
 
 export const Button: React.FC<IButton> = ({
     children,

@@ -35,6 +35,12 @@ export const documentReducer = (
                 loading: false,
                 error: null,
             };
+        case DocumentActionTypes.SET_ZERO_DOCUMENT:
+            return {
+                document: {} as IDocumentFull,
+                loading: false,
+                error: null,
+            };
         default:
             return state;
     }

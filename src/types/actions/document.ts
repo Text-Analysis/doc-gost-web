@@ -18,6 +18,7 @@ export interface DocumentState {
 
 export enum DocumentActionTypes {
     FETCH_DOCUMENT = 'FETCH_DOCUMENT',
+    SET_ZERO_DOCUMENT = 'SET_ZERO_DOCUMENT',
     FETCH_DOCUMENT_SUCCESS = 'FETCH_DOCUMENT_SUCCESS',
     EDIT_SECTION_DOCUMENT = 'EDIT_SECTION_DOCUMENT',
     FETCH_DOCUMENT_ERROR = 'FETCH_DOCUMENT_ERROR',
@@ -42,8 +43,13 @@ interface FetchDocumentActionError {
     payload: any;
 }
 
+interface SetZeroDocument {
+    type: DocumentActionTypes.SET_ZERO_DOCUMENT;
+}
+
 export type DocumentAction =
     | FetchDocumentAction
     | FetchDocumentActionSuccess
     | FetchDocumentActionError
-    | EditSectionDocument;
+    | EditSectionDocument
+    | SetZeroDocument;

@@ -11,6 +11,7 @@ export const changeTextSection = (
         } else {
             if (block.name === childName) {
                 block.text = value;
+                return;
             }
         }
     });

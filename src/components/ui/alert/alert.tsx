@@ -1,26 +1,20 @@
-import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
+import React from 'react';
 import styles from './alert.module.scss';
 import cn from 'classnames';
-
-interface IAlert
-    extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-    children: React.ReactNode;
-    state?: 'success' | 'error';
-    visible: boolean;
-}
+import { IAlert } from '../../../types/components';
 
 export const Alert: React.FC<IAlert> = ({
     visible,
     children,
     className,
-    state,
+    isError,
     ...props
 }) => {
     return (
         <div
             className={cn(className, styles.alert, {
-                [styles.success]: state === 'success',
-                [styles.error]: state === 'error',
+                [styles.success]: !isError,
+                [styles.error]: isError,
                 [styles.alertActive]: visible,
             })}
             {...props}
