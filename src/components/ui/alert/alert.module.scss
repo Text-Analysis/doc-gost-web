@@ -1,0 +1,29 @@
+.alert {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  text-align: center;
+  min-width: 20vw;
+  padding: 1vw;
+  border-radius: 6px;
+  font-weight: 300;
+  font-size: 1.2vw;
+  line-height: 1.4vw;
+  transition: opacity ease 0.7s;
+}
+
+.alertActive {
+  opacity: 1;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.error {
+  color: #D8000C;
+  background-color: #FFD2D2;
+}
+
+.success {
+  color: #4F8A10;
+  background-color: #DFF2BF;
+}

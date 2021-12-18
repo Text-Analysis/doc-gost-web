@@ -1,0 +1,23 @@
+.actions{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 10vw;
+  margin-left: 6vw;
+  margin-bottom: 1vw;
+  button {
+    margin-left: 5vw;
+  }
+}
+.notFindText{
+  color: #818EA3;
+  font-size: 1.4vw;
+  line-height: 1.54vw;
+  font-weight: 300;
+  margin-left: 6vw;
+  margin-top: 2vw;
+}
+.alert {
+  bottom: 2vw;
+  right: 2vw;
+}
