@@ -6,18 +6,20 @@ import { useDispatch } from 'react-redux';
 import { fetchTemplate } from '../../store/actionCreators/document';
 import { useTypeSelector } from '../../hooks/useTypeSelector';
 import { LayoutTree } from '../tree/tree';
-import { createDocument } from '../../api';
+import DocumentService from '../../services/documentService';
+import { templateId } from '../../constants';
+import { documentSelector } from '../../store/selectors';
 
 export const CreateBlock: React.FC = () => {
     const dispatch = useDispatch();
-    const { document } = useTypeSelector((state) => state.document);
+    const { document } = useTypeSelector(documentSelector);
     const [nameFile, setNameFile] = useState<string>();
     const [isErrorName, setErrorName] = useState<boolean>(false);
     const [isAlert, setAlert] = useState<boolean>(false);
     const [isErrorSave, setErrorSave] = useState<boolean>(false);
 
     useEffect(() => {
-        dispatch(fetchTemplate('61bc2be58718677d692a26c7'));
+        dispatch(fetchTemplate(templateId));
     }, []);
 
     const changeNameFile = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +33,7 @@ export const CreateBlock: React.FC = () => {
             return;
         }
 
-        createDocument(nameFile, document.structure)
+        DocumentService.createDocument(nameFile, document.structure)
             .then(() => {
                 setAlert(true);
                 setErrorSave(false);
@@ -43,28 +45,36 @@ export const CreateBlock: React.FC = () => {
     };
 
     return (
-        <LayoutBlock>
-            <div className={styles.actions}>
-                <Input
-                    placeholder={'Введите название файла'}
-                    isError={isErrorName}
-                    onChange={changeNameFile}
-                />
-                <Button colorBtn={'blue'} onClick={saveDocument}>
-                    Сохранить файл
-                </Button>
-            </div>
-            {document.structure && <LayoutTree data={document.structure} />}
-            <Alert
-                className={styles.alert}
-                visible={isAlert}
-                isError={isErrorSave}
-                onClick={() => setAlert(false)}
-            >
-                {isErrorSave
-                    ? 'Произошла ошибка при сохранении файла'
-                    : 'Файл успешно сохранён'}
-            </Alert>
-        </LayoutBlock>
+        <LayoutBlock
+            actions={
+                <>
+                    <Input
+                        placeholder={'Введите название файла'}
+                        isError={isErrorName}
+                        onChange={changeNameFile}
+                    />
+                    <Button colorBtn={'blue'} onClick={saveDocument}>
+                        Сохранить файл
+                    </Button>
+                </>
+            }
+            mainPart={
+                <>
+                    {document.structure && (
+                        <LayoutTree data={document.structure} />
+                    )}
+                    <Alert
+                        className={styles.alert}
+                        visible={isAlert}
+                        isError={isErrorSave}
+                        onClick={() => setAlert(false)}
+                    >
+                        {isErrorSave
+                            ? 'Произошла ошибка при сохранении файла'
+                            : 'Файл успешно сохранён'}
+                    </Alert>
+                </>
+            }
+        />
     );
 };

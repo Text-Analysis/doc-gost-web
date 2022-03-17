@@ -3,12 +3,11 @@
   opacity: 0;
   pointer-events: none;
   text-align: center;
-  min-width: 20vw;
-  padding: 1vw;
+  min-width: 290px;
+  padding: 15px;
   border-radius: 6px;
   font-weight: 300;
-  font-size: 1.2vw;
-  line-height: 1.4vw;
+  font-size: 1rem;
   transition: opacity ease 0.7s;
 }
 
@@ -19,11 +18,11 @@
 }
 
 .error {
-  color: #D8000C;
-  background-color: #FFD2D2;
+  color: var(--red);
+  background-color: var(--redLight);
 }
 
 .success {
-  color: #4F8A10;
-  background-color: #DFF2BF;
+  color: var(--green);
+  background-color: var(--greenLight);
 }

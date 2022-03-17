@@ -42,7 +42,8 @@ export interface IAction
 }
 
 export interface ILayoutBlock {
-    children: React.ReactNode;
+    actions: React.ReactNode;
+    mainPart: React.ReactNode;
 }
 
 export interface IInput

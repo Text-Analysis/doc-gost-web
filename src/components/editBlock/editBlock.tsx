@@ -9,13 +9,17 @@ import {
     fetchDocument,
     setZeroDocument,
 } from '../../store/actionCreators/document';
-import { updateDocument } from '../../api';
 import { LayoutBlock } from '../layoutBlock/layoutBlock';
+import DocumentService from '../../services/documentService';
+import {
+    documentSelector,
+    documentTitlesSelector,
+} from '../../store/selectors';
 
 export const EditBlock: React.FC = () => {
     const dispatch = useDispatch();
-    const { documents } = useTypeSelector((state) => state.documentTitles);
-    const { document, loading } = useTypeSelector((state) => state.document);
+    const { documents } = useTypeSelector(documentTitlesSelector);
+    const { document, loading } = useTypeSelector(documentSelector);
     const [documentId, setDocumentId] = useState<string>('');
     const [isAlert, setAlert] = useState<boolean>(false);
     const [isUpdate, setUpdate] = useState<boolean>(false);
@@ -39,7 +43,7 @@ export const EditBlock: React.FC = () => {
 
     const updateDoc = () => {
         setUpdate(true);
-        updateDocument(document.id, document.structure)
+        DocumentService.updateDocument(document.id, document.structure)
             .then(() => {
                 setUpdate(false);
                 setAlert(true);
@@ -53,33 +57,41 @@ export const EditBlock: React.FC = () => {
     };
 
     return (
-        <LayoutBlock>
-            <div className={styles.actions}>
-                <Select data={documents} onChange={onChangeDocumentId} />
-                <Button
-                    colorBtn={'blue'}
-                    onClick={updateDoc}
-                    disableBtn={isUpdate}
-                >
-                    {isUpdate ? 'Сохраняется' : 'Изменить'}
-                </Button>
-            </div>
-            {document.structure && <LayoutTree data={document.structure} />}
-            {!document.structure && !loading && (
-                <span className={styles.notFindText}>
-                    Выберите документ, чтобы получить информацию
-                </span>
-            )}
-            <Alert
-                className={styles.alert}
-                isError={isErrorUpdate}
-                visible={isAlert}
-                onClick={() => setAlert(false)}
-            >
-                {isErrorUpdate
-                    ? 'Произошла ошибка при обновлении файла'
-                    : 'Файл успешно обновлён'}
-            </Alert>
-        </LayoutBlock>
+        <LayoutBlock
+            actions={
+                <>
+                    <Select data={documents} onChange={onChangeDocumentId} />
+                    <Button
+                        colorBtn={'blue'}
+                        onClick={updateDoc}
+                        disableBtn={isUpdate}
+                    >
+                        {isUpdate ? 'Сохраняется' : 'Изменить'}
+                    </Button>
+                </>
+            }
+            mainPart={
+                <>
+                    {document.structure && (
+                        <LayoutTree data={document.structure} />
+                    )}
+                    {!document.structure && !loading && (
+                        <span className={styles.notFindText}>
+                            Выберите документ, чтобы получить информацию
+                        </span>
+                    )}
+                    <Alert
+                        className={styles.alert}
+                        isError={isErrorUpdate}
+                        visible={isAlert}
+                        onClick={() => setAlert(false)}
+                    >
+                        {isErrorUpdate
+                            ? 'Произошла ошибка при обновлении файла'
+                            : 'Файл успешно обновлён'}
+                    </Alert>
+                </>
+            }
+        />
     );
 };

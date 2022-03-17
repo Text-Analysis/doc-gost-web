@@ -3,13 +3,13 @@ import {
     DocumentsAction,
     DocumentsActionTypes,
 } from '../../types/actions/documents';
-import { getDocuments } from '../../api';
+import DocumentService from '../../services/documentService';
 
 export const fetchDocumentsTitle = () => {
     return async (dispatch: Dispatch<DocumentsAction>) => {
         try {
             dispatch({ type: DocumentsActionTypes.FETCH_DOCUMENTS });
-            const response = await getDocuments();
+            const response = await DocumentService.getDocuments();
             dispatch({
                 type: DocumentsActionTypes.FETCH_DOCUMENTS_SUCCESS,
                 payload: response.data.data,

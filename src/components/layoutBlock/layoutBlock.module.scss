@@ -1,6 +1,19 @@
 .layout {
   display: flex;
+  flex-direction: column;
   width: 80vw;
   height: 100vh;
-  flex-direction: column;
+  min-width: calc(100vw - 288px);
+  .actions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 700px;
+    margin-top: 140px;
+    margin-left: 85px;
+    margin-bottom: 15px;
+  }
+
 }

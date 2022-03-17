@@ -4,15 +4,15 @@ import {
     DocumentActionTypes,
     IData,
 } from '../../types/actions/document';
-import { getDocument, getTemplate } from '../../api';
 import { changeTextSection } from '../../utils';
+import DocumentService from '../../services/documentService';
 
 export const fetchDocument = (id: string) => {
     return async (dispatch: Dispatch<DocumentAction>) => {
         try {
             dispatch({ type: DocumentActionTypes.FETCH_DOCUMENT });
 
-            const response = await getDocument(id);
+            const response = await DocumentService.getDocument(id);
 
             dispatch({
                 type: DocumentActionTypes.FETCH_DOCUMENT_SUCCESS,
@@ -32,7 +32,7 @@ export const fetchTemplate = (id: string) => {
         try {
             dispatch({ type: DocumentActionTypes.FETCH_DOCUMENT });
 
-            const response = await getTemplate(id);
+            const response = await DocumentService.getTemplate(id);
 
             dispatch({
                 type: DocumentActionTypes.FETCH_DOCUMENT_SUCCESS,

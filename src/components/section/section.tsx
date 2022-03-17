@@ -7,6 +7,7 @@ import { useTypeSelector } from '../../hooks/useTypeSelector';
 import { useDispatch } from 'react-redux';
 import { editSectionDocument } from '../../store/actionCreators/document';
 import { Button } from '../ui';
+import { documentSelector } from '../../store/selectors';
 
 export const Section: React.FC<ISection> = ({
     title,
@@ -17,7 +18,7 @@ export const Section: React.FC<ISection> = ({
     const [activeBlock, setActiveBlock] = useState<boolean>(false);
     const [isEdit, setIsEdit] = useState<boolean>(false);
     const [valueText, setValueText] = useState<string>('');
-    const { document } = useTypeSelector((state) => state.document);
+    const { document } = useTypeSelector(documentSelector);
     const dispatch = useDispatch();
 
     const changeValue = (e: ChangeEvent<HTMLTextAreaElement>) => {

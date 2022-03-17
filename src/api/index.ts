@@ -1,30 +1,42 @@
-import axios from 'axios';
-import { IData, IDocumentFull } from '../types/actions/document';
-import { RequestDocuments } from '../types/api';
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import { urlApi } from '../constants';
 
-const instanceApi = axios.create({
-    baseURL: 'http://127.0.0.1:8000/api/',
-    headers: {
-        'Access-Control-Allow-Origin': '*',
-    },
-});
+class Api {
+    protected instanceApi: AxiosInstance;
 
-export const getDocuments = () => {
-    return instanceApi.get<RequestDocuments>('/specifications');
-};
+    constructor() {
+        this.instanceApi = axios.create({
+            baseURL: urlApi,
+            headers: {
+                Accept: 'application/json',
+                'Access-Control-Allow-Origin': '*',
+            },
+        });
+    }
 
-export const getDocument = (id: string) => {
-    return instanceApi.get<IDocumentFull>(`/specifications/${id}`);
-};
+    protected async get<T>(url: string): Promise<AxiosResponse<T>> {
+        return this.instanceApi.get<T>(url);
+    }
 
-export const updateDocument = (id: string, obj: IData[]) => {
-    return instanceApi.put(`/specifications/${id}`, { structure: obj });
-};
+    protected async post<T, V>(
+        url: string,
+        data: FormData | V
+    ): Promise<AxiosResponse<T>> {
+        if (data instanceof FormData) {
+            return this.instanceApi.post<T>(url, data, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            });
+        }
+        return this.instanceApi.post<T>(url, data);
+    }
 
-export const createDocument = (name: string, obj: IData[]) => {
-    return instanceApi.post('/specifications/', { name, structure: obj });
-};
+    protected async delete(url: string): Promise<AxiosResponse> {
+        return this.instanceApi.delete(url);
+    }
 
-export const getTemplate = (id: string) => {
-    return instanceApi.get<IDocumentFull>(`/templates/${id}`);
-};
+    protected async put<T, V>(url: string, data: V): Promise<AxiosResponse<T>> {
+        return this.instanceApi.put<T>(url, data);
+    }
+}
+
+export default Api;

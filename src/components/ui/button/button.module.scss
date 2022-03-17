@@ -1,28 +1,28 @@
 .button {
   border: none;
-  color: white;
+  color: var(--white);
   border-radius: 6px;
-  padding: 0.5vw 1vw;
+  padding: 5px 15px;
   cursor: pointer;
   transition: all ease 0.7s;
 }
 
 .btnBlue {
-  background: #5694F3;
+  background: var(--blueTwo);
   &:hover {
-    background: #447ACC;
+    background: var(--blueOne);
   }
 }
 
 .btnGreen {
-  background: #0EC261;
+  background: var(--greenLightCool);
   &:hover {
-    background: #10944a;
+    background: var(--greenDark);
   }
 }
 
 .btnDisable {
-  background-color: #ddd;
+  background-color: var(--grey);
   pointer-events:none;
   cursor: none;
 }

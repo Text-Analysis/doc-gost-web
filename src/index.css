@@ -60,7 +60,7 @@ body {
   text-rendering: optimizeSpeed;
   line-height: 1.5;
   font-family: Roboto, sans-serif;
-  background: #F5F6F8;
+  background: var(--mainColor);
 }
 
 /* Удаляем стандартную стилизацию для всех ul и il, у которых есть атрибут class*/
@@ -101,4 +101,23 @@ select {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+:root {
+  --mainColor: #F5F6F8;
+  --textAdd: #818EA3;
+  --white: white;
+  --grey: #ddd;
+  --greyDim: #BECAD6;
+  --blueOne: #447ACC;
+  --blueTwo: #5694F3;
+  --blueThree: #007BFF;
+  --black25: rgba(0, 0, 0, 0.25);
+  --black: black;
+  --red: #D8000C;
+  --redLight: #FFD2D2;
+  --greenLight: #DFF2BF;
+  --greenLightCool: #0EC261;
+  --greenDark: #10944a;
+  --green: #4F8A10;
 }

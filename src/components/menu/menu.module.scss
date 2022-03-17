@@ -4,23 +4,24 @@
   justify-content: center;
   width: 20vw;
   height: 100vh;
-  background: #447ACC;
+  background: var(--blueOne);
+  min-width: 288px;
   .action{
     display: flex;
     flex-direction: row;
     align-items: center;
     width: 100%;
-    height: 4vw;
+    height: 58px;
     cursor: pointer;
-    color: white;
+    color: var(--white);
     font-weight: 300;
-    padding-left: 3vw;
+    padding-left: 43px;
     transition: all ease 0.4s;
     &:hover{
-      background: #5694F3;
+      background: var(--blueTwo);
     }
   }
   .activeAction{
-    background: #5694F3;
+    background: var(--blueTwo);
   }
 }
