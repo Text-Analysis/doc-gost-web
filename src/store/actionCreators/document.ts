@@ -27,6 +27,33 @@ export const fetchDocument = (id: string) => {
     };
 };
 
+export const uploadDocument = (filename: string, file: File) => {
+    return async (dispatch: Dispatch<DocumentAction>) => {
+        try {
+            dispatch({ type: DocumentActionTypes.FETCH_DOCUMENT });
+
+            const responseId = await DocumentService.uploadDocument(
+                filename,
+                file
+            );
+
+            const responseDocument = await DocumentService.getDocument(
+                responseId.data
+            );
+
+            dispatch({
+                type: DocumentActionTypes.FETCH_DOCUMENT_SUCCESS,
+                payload: responseDocument.data,
+            });
+        } catch (error) {
+            dispatch({
+                type: DocumentActionTypes.FETCH_DOCUMENT_ERROR,
+                payload: error,
+            });
+        }
+    };
+};
+
 export const fetchTemplate = (id: string) => {
     return async (dispatch: Dispatch<DocumentAction>) => {
         try {

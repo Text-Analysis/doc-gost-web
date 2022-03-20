@@ -6,7 +6,7 @@ export const LayoutBlock: React.FC<ILayoutBlock> = ({ actions, mainPart }) => {
     return (
         <div className={styles.layout}>
             <div className={styles.actions}>{actions}</div>
-            {mainPart}
+            <div className={styles.mainPart}>{mainPart}</div>
         </div>
     );
 };
