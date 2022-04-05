@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CreateBlock, EditBlock, Menu } from '../../components';
+import { CreateBlock, EditBlock, KeywordsBlock, Menu } from '../../components';
 import styles from './mainPage.module.scss';
 import { RecognitionBlock } from '../../components/recognitionBlock/recognitionBlock';
 
@@ -14,6 +14,8 @@ export const MainPage: React.FC = () => {
                 return <CreateBlock />;
             case 2:
                 return <RecognitionBlock />;
+            case 3:
+                return <KeywordsBlock />;
         }
     };
     return (

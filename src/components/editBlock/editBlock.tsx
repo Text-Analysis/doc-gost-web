@@ -4,7 +4,7 @@ import { fetchDocumentsTitle } from '../../store/actionCreators/documents';
 import { useDispatch } from 'react-redux';
 import styles from './editBlock.module.scss';
 import { LayoutTree } from '../tree/tree';
-import { Select, Button, Alert } from '../ui';
+import { Button, Alert, SelectDoc } from '../ui';
 import {
     fetchDocument,
     setZeroDocument,
@@ -58,9 +58,10 @@ export const EditBlock: React.FC = () => {
 
     return (
         <LayoutBlock
+            sectionName={'Редактирование документа'}
             actions={
                 <>
-                    <Select data={documents} onChange={onChangeDocumentId} />
+                    <SelectDoc data={documents} onChange={onChangeDocumentId} />
                     <Button
                         colorBtn={'blue'}
                         onClick={updateDoc}

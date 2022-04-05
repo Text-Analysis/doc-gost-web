@@ -41,6 +41,7 @@ export const RecognitionBlock: React.FC = () => {
     };
     return (
         <LayoutBlock
+            sectionName={'Распознавание документа'}
             actions={
                 <>
                     <Input

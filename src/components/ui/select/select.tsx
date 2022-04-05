@@ -1,24 +1,20 @@
 import React from 'react';
 import styles from './select.module.scss';
+import { ISelectDefault } from './selectProps';
 import cn from 'classnames';
-import { ISelect } from '../../../types/components';
 
-export const Select: React.FC<ISelect> = ({ data, className, ...props }) => {
+export const Select: React.FC<ISelectDefault> = ({
+    children,
+    className,
+    ...props
+}) => {
     return (
-        <div className={styles.select}>
-            <select
-                className={cn(className)}
-                {...props}
-                placeholder={'Выберите документ'}
-            >
+        <div className={cn(styles.select, className)}>
+            <select {...props}>
                 <option value={''} disabled selected>
-                    Выберите документ
+                    Не выбрано
                 </option>
-                {data.map((item) => (
-                    <option key={item.id} value={item.id}>
-                        {item.documentName}
-                    </option>
-                ))}
+                {children}
             </select>
         </div>
     );

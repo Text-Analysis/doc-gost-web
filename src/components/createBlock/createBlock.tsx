@@ -46,6 +46,7 @@ export const CreateBlock: React.FC = () => {
 
     return (
         <LayoutBlock
+            sectionName={'Создание документа'}
             actions={
                 <>
                     <Input

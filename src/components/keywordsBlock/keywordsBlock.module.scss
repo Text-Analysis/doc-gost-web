@@ -1,0 +1,54 @@
+.keywordsBlock {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding-left: 85px;
+  padding-right: 50px;
+  padding-top: 40px;
+  h1 {
+    font-size: 30px;
+    font-weight: bold;
+    color: var(--blueOne);
+  }
+  .settingsBlock {
+    width: 100%;
+    margin-top: 40px;
+    h2 {
+      font-size: 25px;
+      font-weight: normal;
+      margin-bottom: 15px;
+    }
+    .settings {
+      display: flex;
+      flex-direction: row;
+      align-items: end;
+      width: 100%;
+      margin-bottom: 30px;
+      .setting {
+        display: flex;
+        flex-direction: column;
+        .select {
+          width: 300px;
+        }
+        h3 {
+          font-size: 18px;
+          font-weight: lighter;
+          margin-bottom: 10px;
+        }
+        &:nth-child(1) {
+          margin-right: 40px;
+        }
+      }
+      .procBtn {
+        height: 40px;
+        margin-left: 40px;
+      }
+    }
+    .line {
+      background: var(--greyDim);
+      width: 100%;
+      height: 1px;
+    }
+  }
+}

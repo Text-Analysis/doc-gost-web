@@ -10,10 +10,13 @@ export const Menu: React.FC<IMenu> = ({ activeSection, setSection }) => {
                 Редактирование документа
             </Action>
             <Action active={activeSection === 1} onClick={() => setSection(1)}>
-                Создать документ
+                Создание документа
             </Action>
             <Action active={activeSection === 2} onClick={() => setSection(2)}>
-                Распознать документ
+                Распознавание документа
+            </Action>
+            <Action active={activeSection === 3} onClick={() => setSection(3)}>
+                Ключевые слова
             </Action>
         </div>
     );

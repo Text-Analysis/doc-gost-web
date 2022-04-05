@@ -3,19 +3,10 @@ import React, {
     Dispatch,
     HTMLAttributes,
     InputHTMLAttributes,
-    SelectHTMLAttributes,
     SetStateAction,
 } from 'react';
-import { IDocument } from '../actions/documents';
-import { IData } from '../actions/document';
 
-export interface ISelect
-    extends DetailedHTMLProps<
-        SelectHTMLAttributes<HTMLSelectElement>,
-        HTMLSelectElement
-    > {
-    data: IDocument[];
-}
+import { IData } from '../actions/document';
 
 export interface ILayout {
     data: IData[];
@@ -42,6 +33,7 @@ export interface IAction
 }
 
 export interface ILayoutBlock {
+    sectionName: string;
     actions: React.ReactNode;
     mainPart: React.ReactNode;
 }
