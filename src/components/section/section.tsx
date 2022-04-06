@@ -46,11 +46,10 @@ export const Section: React.FC<ISection> = ({
                     [styles.activeTitleBlock]: activeBlock,
                 })}
             >
-                <div>
+                <div onClick={() => setActiveBlock((state) => !state)}>
                     <span>{title}</span>
                     <Arrow
                         className={cn({ [styles.activeSvg]: activeBlock })}
-                        onClick={() => setActiveBlock((state) => !state)}
                     />
                 </div>
                 {!children && (
