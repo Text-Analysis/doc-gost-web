@@ -15,7 +15,7 @@ export const modesKeywords = <ModesKeywords>[
     },
     {
         mode: 'combine',
-        title: 'Комбинированный',
+        title: 'TF-IDF + Pullenti',
     },
 ];
 

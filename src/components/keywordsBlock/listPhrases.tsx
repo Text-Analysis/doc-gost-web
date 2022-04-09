@@ -64,9 +64,7 @@ export const ListPhrases: React.FC<IListPhrases> = ({ mode, keywords }) => {
     }, [keywords]);
 
     const getColorByKeyword = (ratio: number) => {
-        return `linear-gradient(to bottom, #ffff00 ${ratio * 100}%, #0000ff ${
-            ratio * 100
-        }%)`;
+        return `linear-gradient(#447ACC, ${ratio * 100}%, #FFBD73)`;
     };
 
     return getKeywordsLayout();

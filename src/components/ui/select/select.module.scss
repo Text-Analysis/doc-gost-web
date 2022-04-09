@@ -2,9 +2,10 @@
   width: 380px;
   select {
     width: 100%;
-    box-shadow: 0px 0px 4px var(--black25);
+    box-shadow: 0 0 4px var(--black25);
     background: var(--white);
     border: 0.5px solid var(--greyDim);
+    cursor: pointer;
     box-sizing: border-box;
     border-radius: 4px;
     padding: 8px 0 8px 15px;

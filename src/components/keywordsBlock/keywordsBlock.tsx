@@ -35,6 +35,8 @@ export const KeywordsBlock: React.FC = () => {
         }
     };
 
+    const isKeywords = !loading && keywords?.length;
+    const isNotKeywords = !loading && !keywords?.length;
     return (
         <div className={styles.keywordsBlock}>
             <h1>Ключевые слова</h1>
@@ -44,10 +46,18 @@ export const KeywordsBlock: React.FC = () => {
                 getKeywords={getKeywords}
                 loading={loading}
             />
-            {!loading && (
+            {isNotKeywords && (
+                <span className={styles.isNotKeywords}>
+                    Выберите настройки и нажмите кнопку «Обработать», чтобы
+                    получить результат
+                </span>
+            )}
+            {isKeywords && (
                 <div className={styles.keywords}>
-                    <h3>Список словосочетаний</h3>
-                    <ListPhrases keywords={keywords} mode={mode} />
+                    <h3>Список ключевых слов</h3>
+                    <div className={styles.keywordsInner}>
+                        <ListPhrases keywords={keywords} mode={mode} />
+                    </div>
                 </div>
             )}
             {loading && (

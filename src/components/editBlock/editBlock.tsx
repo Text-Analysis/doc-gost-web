@@ -60,7 +60,7 @@ export const EditBlock: React.FC = () => {
         <LayoutBlock
             sectionName={'Редактирование документа'}
             actions={
-                <>
+                <div className={styles.action}>
                     <SelectDoc data={documents} onChange={onChangeDocumentId} />
                     <Button
                         colorBtn={'blue'}
@@ -69,7 +69,7 @@ export const EditBlock: React.FC = () => {
                     >
                         {isUpdate ? 'Сохраняется' : 'Изменить'}
                     </Button>
-                </>
+                </div>
             }
             mainPart={
                 <>

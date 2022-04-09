@@ -44,15 +44,22 @@ export const RecognitionBlock: React.FC = () => {
             sectionName={'Распознавание документа'}
             actions={
                 <>
-                    <Input
-                        placeholder={'Введите название файла'}
-                        value={filename}
-                        onChange={changeFilename}
-                    />
-                    <Button colorBtn={'blue'} onClick={onRecognitionFile}>
-                        Распознать файл
-                    </Button>
-                    <Input type={'file'} onChange={changeFile} />
+                    <div className={styles.action}>
+                        <Input
+                            placeholder={'Введите название файла'}
+                            value={filename}
+                            onChange={changeFilename}
+                        />
+                        <Button colorBtn={'blue'} onClick={onRecognitionFile}>
+                            Распознать файл
+                        </Button>
+                    </div>
+                    <div className={styles.action}>
+                        <Input type={'file'} onChange={changeFile} />
+                        <Button colorBtn={'blue'} onClick={onRecognitionFile}>
+                            Сохранить файл
+                        </Button>
+                    </div>
                 </>
             }
             mainPart={

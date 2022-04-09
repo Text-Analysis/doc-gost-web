@@ -48,7 +48,7 @@ export const CreateBlock: React.FC = () => {
         <LayoutBlock
             sectionName={'Создание документа'}
             actions={
-                <>
+                <div className={styles.action}>
                     <Input
                         placeholder={'Введите название файла'}
                         isError={isErrorName}
@@ -57,7 +57,7 @@ export const CreateBlock: React.FC = () => {
                     <Button colorBtn={'blue'} onClick={saveDocument}>
                         Сохранить файл
                     </Button>
-                </>
+                </div>
             }
             mainPart={
                 <>

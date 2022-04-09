@@ -17,30 +17,38 @@ export const SettingsBlock: React.FC<ISettingsBlock> = ({
         <div className={styles.settingsBlock}>
             <h2>Настройки</h2>
             <div className={styles.settings}>
-                <div className={styles.setting}>
-                    <h3>Выберите документ</h3>
-                    <SelectDoc
-                        data={documents}
-                        className={styles.select}
-                        onChange={onChangeDocumentId}
-                    />
+                <div className={styles.settingBlock}>
+                    <div className={styles.setting}>
+                        <h3>Выберите документ</h3>
+                        <SelectDoc
+                            data={documents}
+                            className={styles.select}
+                            onChange={onChangeDocumentId}
+                        />
+                    </div>
+                    <div className={styles.setting}>
+                        <h3>Выберите режим выделения</h3>
+                        <SelectSetting
+                            data={modesKeywords}
+                            className={styles.select}
+                            onChange={onChangeMode}
+                        />
+                    </div>
                 </div>
-                <div className={styles.setting}>
-                    <h3>Выберите режим выделения</h3>
-                    <SelectSetting
-                        data={modesKeywords}
-                        className={styles.select}
-                        onChange={onChangeMode}
-                    />
+                <div className={styles.settingBlock}>
+                    <div className={styles.setting}>
+                        <h3>Выберите раздел</h3>
+                        <SelectDoc data={documents} className={styles.select} />
+                    </div>
+                    <Button
+                        colorBtn={'blue'}
+                        className={styles.procBtn}
+                        disableBtn={loading}
+                        onClick={getKeywords}
+                    >
+                        Обработать
+                    </Button>
                 </div>
-                <Button
-                    colorBtn={'blue'}
-                    className={styles.procBtn}
-                    disableBtn={loading}
-                    onClick={getKeywords}
-                >
-                    Обработать
-                </Button>
             </div>
             <div className={styles.line} />
         </div>

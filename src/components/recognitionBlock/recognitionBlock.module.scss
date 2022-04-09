@@ -11,3 +11,13 @@
   font-size: 1.2rem;
   font-weight: 300;
 }
+
+.action {
+  display: flex;
+  &:nth-child(n + 2) {
+    margin-top: 20px;
+  }
+  button {
+    margin-left: 40px;
+  }
+}
