@@ -34,11 +34,10 @@ class DocumentService extends Api {
         return this.get<IDocumentFull>(`/templates/${id}`);
     }
 
-    public uploadDocument(filename: string, file: File) {
+    public parseDocument(file: File) {
         const formData = new FormData();
-        formData.set('filename', filename);
         formData.set('file', file);
-        return this.post<string, FormData>('/file', formData);
+        return this.post<IData[], FormData>('/file', formData);
     }
 
     public getKeywords(id: string, mode: Mode) {

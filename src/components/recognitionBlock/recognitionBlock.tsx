@@ -11,6 +11,7 @@ import {
     uploadDocument,
 } from '../../store/actionCreators/document';
 import { Preloader } from '../preloader/preloader';
+import DocumentService from '../../services/documentService';
 
 export const RecognitionBlock: React.FC = () => {
     const [filename, setFilename] = useState<string>();
@@ -34,9 +35,19 @@ export const RecognitionBlock: React.FC = () => {
         setFilename(event.target.value);
     };
 
-    const onRecognitionFile = () => {
+    const onRecognitionDocument = () => {
+        if (fileRec) {
+            dispatch(uploadDocument(fileRec));
+        }
+    };
+
+    const onCreateDocument = () => {
         if (filename && fileRec) {
-            dispatch(uploadDocument(filename, fileRec));
+            DocumentService.createDocument(filename, document.structure).then(
+                (response) => {
+                    console.log('SUCCESS', response);
+                }
+            );
         }
     };
     return (
@@ -50,13 +61,21 @@ export const RecognitionBlock: React.FC = () => {
                             value={filename}
                             onChange={changeFilename}
                         />
-                        <Button colorBtn={'blue'} onClick={onRecognitionFile}>
+                        <Button
+                            disableBtn={loading}
+                            colorBtn={'blue'}
+                            onClick={onRecognitionDocument}
+                        >
                             Распознать файл
                         </Button>
                     </div>
                     <div className={styles.action}>
                         <Input type={'file'} onChange={changeFile} />
-                        <Button colorBtn={'blue'} onClick={onRecognitionFile}>
+                        <Button
+                            disableBtn={loading}
+                            colorBtn={'blue'}
+                            onClick={onCreateDocument}
+                        >
                             Сохранить файл
                         </Button>
                     </div>

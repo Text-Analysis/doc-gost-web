@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
-import { CreateBlock, EditBlock, KeywordsBlock, Menu } from '../../components';
+import {
+    CreateBlock,
+    EditBlock,
+    KeywordsBlock,
+    Menu,
+    ApplyBlock,
+    RecognitionBlock,
+} from '../../components';
 import styles from './mainPage.module.scss';
-import { RecognitionBlock } from '../../components/recognitionBlock/recognitionBlock';
 
 export const MainPage: React.FC = () => {
     const [activeSection, setActiveSection] = useState<number>(0);
@@ -16,6 +22,8 @@ export const MainPage: React.FC = () => {
                 return <RecognitionBlock />;
             case 3:
                 return <KeywordsBlock />;
+            case 4:
+                return <ApplyBlock />;
         }
     };
     return (
