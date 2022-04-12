@@ -1,0 +1,52 @@
+.aboutBlock {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  padding: 40px 50px 30px 85px;
+
+  h1 {
+    font-size: 30px;
+    font-weight: bold;
+    color: var(--blueOne);
+  }
+  .section {
+    margin-top: 20px;
+    h2 {
+      font-size: 25px;
+      font-weight: normal;
+    }
+    ul,
+    ol,
+    p {
+      font-size: 16px;
+      font-weight: lighter;
+      margin-top: 18px;
+    }
+    ol,
+    ul {
+      li {
+        margin-top: 18px;
+      }
+    }
+    a {
+      text-decoration: none;
+      color: var(--blueOne);
+      &:hover {
+        color: var(--blueThree);
+      }
+    }
+  }
+  .line {
+    background: var(--greyDim);
+    margin: 18px 0 18px 0;
+    width: 100%;
+    height: 1px;
+  }
+  .note {
+    font-size: 14px;
+    color: var(--black25);
+    font-style: italic;
+  }
+}

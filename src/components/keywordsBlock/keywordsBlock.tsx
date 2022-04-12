@@ -24,9 +24,9 @@ export const KeywordsBlock: React.FC = () => {
     useEffect(() => {
         if (documentId) {
             setSections([]);
-            DocumentService.getSections(documentId).then((response) =>
-                setSections(response.data)
-            );
+            DocumentService.getSections(documentId).then((response) => {
+                setSections(response.data);
+            });
         }
     }, [documentId]);
 

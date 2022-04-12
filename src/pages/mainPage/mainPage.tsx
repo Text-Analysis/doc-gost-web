@@ -8,6 +8,7 @@ import {
     RecognitionBlock,
 } from '../../components';
 import styles from './mainPage.module.scss';
+import { AboutBlock } from '../../components/aboutBlock/aboutBlock';
 
 export const MainPage: React.FC = () => {
     const [activeSection, setActiveSection] = useState<number>(0);
@@ -24,6 +25,8 @@ export const MainPage: React.FC = () => {
                 return <KeywordsBlock />;
             case 4:
                 return <ApplyBlock />;
+            case 5:
+                return <AboutBlock />;
         }
     };
     return (

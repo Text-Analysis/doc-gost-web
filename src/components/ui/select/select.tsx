@@ -20,7 +20,7 @@ export const Select: React.FC<ISelectDefault> = ({
                     [styles.error]: isError,
                 })}
             >
-                <option value={''} disabled selected>
+                <option value="" disabled selected>
                     Не выбрано
                 </option>
                 {children}
