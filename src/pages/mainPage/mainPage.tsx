@@ -4,7 +4,6 @@ import {
     EditBlock,
     KeywordsBlock,
     Menu,
-    ApplyBlock,
     RecognitionBlock,
 } from '../../components';
 import styles from './mainPage.module.scss';
@@ -24,8 +23,6 @@ export const MainPage: React.FC = () => {
             case 3:
                 return <KeywordsBlock />;
             case 4:
-                return <ApplyBlock />;
-            case 5:
                 return <AboutBlock />;
         }
     };

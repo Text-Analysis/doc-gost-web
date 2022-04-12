@@ -32,17 +32,11 @@ export const Menu: React.FC<IMenu> = ({ activeSection, setSection }) => {
                 >
                     Ключевые слова
                 </Action>
-                <Action
-                    active={activeSection === 4}
-                    onClick={() => setSection(4)}
-                >
-                    Применение
-                </Action>
             </div>
             <div className={styles.aboutProject}>
                 <button
                     className={styles.aboutProject}
-                    onClick={() => setSection(5)}
+                    onClick={() => setSection(4)}
                 >
                     О проекте
                 </button>
