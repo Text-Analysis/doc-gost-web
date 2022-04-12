@@ -21,7 +21,11 @@ export const Input: React.FC<IInput> = ({ type, isError, ...props }) => {
         switch (type) {
             case 'file': {
                 return (
-                    <label className={styles.inputLabel}>
+                    <label
+                        className={cn(styles.inputLabel, {
+                            [styles.error]: isError,
+                        })}
+                    >
                         <input
                             type={type}
                             ref={inputFileRef}

@@ -27,27 +27,20 @@ export const fetchDocument = (id: string) => {
     };
 };
 
-export const uploadDocument = (filename: string, file: File) => {
+export const uploadDocument = (file: File) => {
     return async (dispatch: Dispatch<DocumentAction>) => {
         try {
-            dispatch({ type: DocumentActionTypes.FETCH_DOCUMENT });
+            dispatch({ type: DocumentActionTypes.PARSE_DOCUMENT });
 
-            const responseId = await DocumentService.uploadDocument(
-                filename,
-                file
-            );
-
-            const responseDocument = await DocumentService.getDocument(
-                responseId.data
-            );
+            const docStructure = await DocumentService.parseDocument(file);
 
             dispatch({
-                type: DocumentActionTypes.FETCH_DOCUMENT_SUCCESS,
-                payload: responseDocument.data,
+                type: DocumentActionTypes.PARSE_DOCUMENT_SUCCESS,
+                payload: docStructure.data,
             });
         } catch (error) {
             dispatch({
-                type: DocumentActionTypes.FETCH_DOCUMENT_ERROR,
+                type: DocumentActionTypes.PARSE_DOCUMENT_ERROR,
                 payload: error,
             });
         }

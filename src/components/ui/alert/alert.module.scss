@@ -2,13 +2,15 @@
   position: absolute;
   opacity: 0;
   pointer-events: none;
-  text-align: center;
-  min-width: 290px;
-  padding: 15px;
-  border-radius: 6px;
+  padding: 15px 20px;
+  max-width: 250px;
+  border-radius: 4px;
   font-weight: 300;
   font-size: 1rem;
   transition: opacity ease 0.7s;
+  text-align: start;
+  bottom: 30px;
+  right: 30px;
 }
 
 .alertActive {

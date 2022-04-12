@@ -4,7 +4,7 @@ import { fetchDocumentsTitle } from '../../store/actionCreators/documents';
 import { useDispatch } from 'react-redux';
 import styles from './editBlock.module.scss';
 import { LayoutTree } from '../tree/tree';
-import { Select, Button, Alert } from '../ui';
+import { Button, Alert, SelectDoc } from '../ui';
 import {
     fetchDocument,
     setZeroDocument,
@@ -24,6 +24,8 @@ export const EditBlock: React.FC = () => {
     const [isAlert, setAlert] = useState<boolean>(false);
     const [isUpdate, setUpdate] = useState<boolean>(false);
     const [isErrorUpdate, setErrorUpdate] = useState<boolean>(false);
+    const [selError, setSelError] = useState<boolean>(false);
+
     useEffect(() => {
         dispatch(fetchDocumentsTitle());
         if (document.structure) {
@@ -38,10 +40,18 @@ export const EditBlock: React.FC = () => {
     }, [documentId]);
 
     const onChangeDocumentId = (e: ChangeEvent<HTMLSelectElement>) => {
+        if (selError) {
+            setSelError(false);
+        }
         setDocumentId(e.target.value);
     };
 
     const updateDoc = () => {
+        if (!documentId) {
+            setSelError(true);
+            return;
+        }
+
         setUpdate(true);
         DocumentService.updateDocument(document.id, document.structure)
             .then(() => {
@@ -58,17 +68,22 @@ export const EditBlock: React.FC = () => {
 
     return (
         <LayoutBlock
+            sectionName={'Редактирование документа'}
             actions={
-                <>
-                    <Select data={documents} onChange={onChangeDocumentId} />
+                <div className={styles.action}>
+                    <SelectDoc
+                        data={documents}
+                        onChange={onChangeDocumentId}
+                        isError={selError}
+                    />
                     <Button
                         colorBtn={'blue'}
                         onClick={updateDoc}
-                        disableBtn={isUpdate}
+                        disable={isUpdate}
                     >
                         {isUpdate ? 'Сохраняется' : 'Изменить'}
                     </Button>
-                </>
+                </div>
             }
             mainPart={
                 <>
@@ -81,7 +96,6 @@ export const EditBlock: React.FC = () => {
                         </span>
                     )}
                     <Alert
-                        className={styles.alert}
                         isError={isErrorUpdate}
                         visible={isAlert}
                         onClick={() => setAlert(false)}

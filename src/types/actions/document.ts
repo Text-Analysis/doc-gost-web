@@ -22,6 +22,23 @@ export enum DocumentActionTypes {
     FETCH_DOCUMENT_SUCCESS = 'FETCH_DOCUMENT_SUCCESS',
     EDIT_SECTION_DOCUMENT = 'EDIT_SECTION_DOCUMENT',
     FETCH_DOCUMENT_ERROR = 'FETCH_DOCUMENT_ERROR',
+    PARSE_DOCUMENT = 'PARSE_DOCUMENT',
+    PARSE_DOCUMENT_SUCCESS = 'PARSE_DOCUMENT_SUCCESS',
+    PARSE_DOCUMENT_ERROR = 'PARSE_DOCUMENT_ERROR',
+}
+
+interface ParseDocumentAction {
+    type: DocumentActionTypes.PARSE_DOCUMENT;
+}
+
+interface ParseDocumentActionSuccess {
+    type: DocumentActionTypes.PARSE_DOCUMENT_SUCCESS;
+    payload: IData[];
+}
+
+interface ParseDocumentActionError {
+    type: DocumentActionTypes.PARSE_DOCUMENT_ERROR;
+    payload: any;
 }
 
 interface FetchDocumentAction {
@@ -52,4 +69,7 @@ export type DocumentAction =
     | FetchDocumentActionSuccess
     | FetchDocumentActionError
     | EditSectionDocument
-    | SetZeroDocument;
+    | SetZeroDocument
+    | ParseDocumentAction
+    | ParseDocumentActionSuccess
+    | ParseDocumentActionError;
