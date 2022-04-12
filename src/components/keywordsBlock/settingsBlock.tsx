@@ -1,15 +1,18 @@
-import React, { ChangeEvent } from 'react';
-import { Button, SelectDoc, SelectSetting } from '../ui';
+import React from 'react';
+import { Button, SelectDoc, SelectMode } from '../ui';
 import { modesKeywords } from '../../constants';
 import styles from './keywordsBlock.module.scss';
 import { useTypeSelector } from '../../hooks/useTypeSelector';
 import { documentTitlesSelector } from '../../store/selectors';
 import { ISettingsBlock } from './keywordsBlockProps';
+import { SelectSection } from '../ui/select';
 
 export const SettingsBlock: React.FC<ISettingsBlock> = ({
     onChangeDocumentId,
     onChangeMode,
+    onChangeSection,
     getKeywords,
+    sections,
     loading,
 }) => {
     const { documents } = useTypeSelector(documentTitlesSelector);
@@ -28,7 +31,7 @@ export const SettingsBlock: React.FC<ISettingsBlock> = ({
                     </div>
                     <div className={styles.setting}>
                         <h3>Выберите режим выделения</h3>
-                        <SelectSetting
+                        <SelectMode
                             data={modesKeywords}
                             className={styles.select}
                             onChange={onChangeMode}
@@ -38,12 +41,17 @@ export const SettingsBlock: React.FC<ISettingsBlock> = ({
                 <div className={styles.settingBlock}>
                     <div className={styles.setting}>
                         <h3>Выберите раздел</h3>
-                        <SelectDoc data={documents} className={styles.select} />
+                        <SelectSection
+                            disabled={!sections.length}
+                            data={sections}
+                            className={styles.select}
+                            onChange={onChangeSection}
+                        />
                     </div>
                     <Button
                         colorBtn={'blue'}
                         className={styles.procBtn}
-                        disableBtn={loading}
+                        disable={loading}
                         onClick={getKeywords}
                     >
                         Обработать

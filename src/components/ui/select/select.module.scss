@@ -4,7 +4,7 @@
     width: 100%;
     box-shadow: 0 0 4px var(--black25);
     background: var(--white);
-    border: 0.5px solid var(--greyDim);
+    border: 1px solid var(--greyDim);
     cursor: pointer;
     box-sizing: border-box;
     border-radius: 4px;
@@ -15,5 +15,13 @@
     font-size: 1rem;
     letter-spacing: -0.345714px;
     color: var(--black);
+    transition: border ease 0.2s;
   }
+}
+.disabled {
+  color: var(--black25) !important;
+}
+
+.error {
+  border: 1px solid var(--red) !important;
 }

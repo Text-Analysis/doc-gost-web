@@ -57,7 +57,7 @@ export const Section: React.FC<ISection> = ({
                         <textarea defaultValue={text} onChange={changeValue} />
                         <Button
                             colorBtn={'green'}
-                            disableBtn={!isEdit}
+                            disable={!isEdit}
                             onClick={() => editSection(title)}
                         >
                             Сохранить

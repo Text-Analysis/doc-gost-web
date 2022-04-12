@@ -40,10 +40,24 @@ class DocumentService extends Api {
         return this.post<IData[], FormData>('/file', formData);
     }
 
-    public getKeywords(id: string, mode: Mode) {
+    public getSections(id: string) {
+        return this.get<string[]>(`sections/${id}`);
+    }
+
+    public getKeywords(id: string, mode: Mode, section = '') {
         if (mode === 'combine' || mode === 'tf_idf') {
+            if (section) {
+                return this.get<IKeywordsTypeOne>(
+                    `/specifications/${id}/keywords?mode=${mode}&section=${section}`
+                );
+            }
             return this.get<IKeywordsTypeOne>(
                 `/specifications/${id}/keywords?mode=${mode}`
+            );
+        }
+        if (section) {
+            return this.get<string[]>(
+                `/specifications/${id}/keywords?mode=${mode}&section=${section}`
             );
         }
         return this.get<string[]>(

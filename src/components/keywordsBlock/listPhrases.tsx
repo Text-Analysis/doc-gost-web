@@ -10,7 +10,6 @@ export const ListPhrases: React.FC<IListPhrases> = ({ mode, keywords }) => {
                 <div className={styles.listKeywords}>
                     {(keywords as IKeywordsTypeOne).map((keyword) => {
                         const title = `${keyword[0]} (${keyword[1]})`;
-                        console.log(getColorByKeyword(keyword[1]));
                         if (mode === 'combine') {
                             return (
                                 <div
@@ -64,7 +63,7 @@ export const ListPhrases: React.FC<IListPhrases> = ({ mode, keywords }) => {
     }, [keywords]);
 
     const getColorByKeyword = (ratio: number) => {
-        return `linear-gradient(#447ACC, ${ratio * 100}%, #FFBD73)`;
+        return `linear-gradient(#FFBD73, ${ratio * 100}%, #447ACC)`;
     };
 
     return getKeywordsLayout();

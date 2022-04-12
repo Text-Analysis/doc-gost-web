@@ -60,5 +60,5 @@ export interface IButton
     > {
     children: React.ReactNode;
     colorBtn: 'green' | 'blue';
-    disableBtn?: boolean;
+    disable?: boolean;
 }

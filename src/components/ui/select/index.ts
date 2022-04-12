@@ -1,2 +1,3 @@
 export { SelectDoc } from './selectDoc';
-export { SelectSetting } from './selectSetting';
+export { SelectMode } from './selectMode';
+export { SelectSection } from './selectSection';

@@ -1,16 +1,34 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import styles from './keywordsBlock.module.scss';
 import DocumentService from '../../services/documentService';
 import { IKeywordsTypeOne, Mode } from '../../types/api';
 import { SettingsBlock } from './settingsBlock';
 import { ListPhrases } from './listPhrases';
-import { Preloader } from '../preloader/preloader';
+import { fetchDocumentsTitle } from '../../store/actionCreators/documents';
+import { useDispatch } from 'react-redux';
+import { PreloaderWithLayout } from '../preloader/preloaderWithLayout';
 
 export const KeywordsBlock: React.FC = () => {
     const [documentId, setDocumentId] = useState<string>('');
     const [mode, setMode] = useState<Mode>();
+    const [sections, setSections] = useState<string[]>([]);
+    const [section, setSection] = useState<string>('');
     const [keywords, setKeywords] = useState<IKeywordsTypeOne | string[]>();
     const [loading, setLoading] = useState<boolean>(false);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchDocumentsTitle());
+    }, []);
+
+    useEffect(() => {
+        if (documentId) {
+            setSections([]);
+            DocumentService.getSections(documentId).then((response) =>
+                setSections(response.data)
+            );
+        }
+    }, [documentId]);
 
     const onChangeDocumentId = (e: ChangeEvent<HTMLSelectElement>) => {
         setDocumentId(e.target.value);
@@ -21,10 +39,14 @@ export const KeywordsBlock: React.FC = () => {
         setMode(value);
     };
 
+    const onChangeSection = (e: ChangeEvent<HTMLSelectElement>) => {
+        setSection(e.target.value);
+    };
+
     const getKeywords = () => {
         if (documentId && mode) {
             setLoading(true);
-            DocumentService.getKeywords(documentId, mode)
+            DocumentService.getKeywords(documentId, mode, section)
                 .then((response) => {
                     setKeywords(response.data);
                     setLoading(false);
@@ -43,7 +65,9 @@ export const KeywordsBlock: React.FC = () => {
             <SettingsBlock
                 onChangeDocumentId={onChangeDocumentId}
                 onChangeMode={onChangeMode}
+                onChangeSection={onChangeSection}
                 getKeywords={getKeywords}
+                sections={sections}
                 loading={loading}
             />
             {isNotKeywords && (
@@ -54,17 +78,13 @@ export const KeywordsBlock: React.FC = () => {
             )}
             {isKeywords && (
                 <div className={styles.keywords}>
-                    <h3>Список ключевых слов</h3>
+                    <h3>Список ключевых слов (словосочетаний)</h3>
                     <div className={styles.keywordsInner}>
                         <ListPhrases keywords={keywords} mode={mode} />
                     </div>
                 </div>
             )}
-            {loading && (
-                <div className={styles.layoutPreloader}>
-                    <Preloader />
-                </div>
-            )}
+            {loading && <PreloaderWithLayout />}
         </div>
     );
 };

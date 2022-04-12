@@ -9,10 +9,11 @@ import { LayoutTree } from '../tree/tree';
 import DocumentService from '../../services/documentService';
 import { templateId } from '../../constants';
 import { documentSelector } from '../../store/selectors';
+import { PreloaderWithLayout } from '../preloader/preloaderWithLayout';
 
 export const CreateBlock: React.FC = () => {
     const dispatch = useDispatch();
-    const { document } = useTypeSelector(documentSelector);
+    const { document, loading } = useTypeSelector(documentSelector);
     const [nameFile, setNameFile] = useState<string>();
     const [isErrorName, setErrorName] = useState<boolean>(false);
     const [isAlert, setAlert] = useState<boolean>(false);
@@ -44,6 +45,7 @@ export const CreateBlock: React.FC = () => {
             });
     };
 
+    const documentFetch = document.structure && !loading;
     return (
         <LayoutBlock
             sectionName={'Создание документа'}
@@ -61,11 +63,9 @@ export const CreateBlock: React.FC = () => {
             }
             mainPart={
                 <>
-                    {document.structure && (
-                        <LayoutTree data={document.structure} />
-                    )}
+                    {documentFetch && <LayoutTree data={document.structure} />}
+                    {loading && <PreloaderWithLayout />}
                     <Alert
-                        className={styles.alert}
                         visible={isAlert}
                         isError={isErrorSave}
                         onClick={() => setAlert(false)}
