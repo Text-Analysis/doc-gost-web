@@ -1,27 +1,19 @@
 .aboutBlock {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 80vw;
   height: 100%;
-  overflow: scroll;
+  overflow-y: scroll;
   padding: 40px 50px 30px 85px;
-
-  h1 {
-    font-size: 30px;
-    font-weight: bold;
-    color: var(--blueOne);
-  }
-  .section {
+  section {
     margin-top: 20px;
-    h2 {
-      font-size: 25px;
-      font-weight: normal;
-    }
     ul,
-    ol,
-    p {
+    ol{
       font-size: 16px;
       font-weight: lighter;
+      margin-top: 18px;
+    }
+    p {
       margin-top: 18px;
     }
     ol,

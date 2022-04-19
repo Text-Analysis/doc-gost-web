@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './alert.module.scss';
 import cn from 'classnames';
-import { IAlert } from '../../../types/components';
+import { IAlert } from './alertProps';
 
 export const Alert: React.FC<IAlert> = ({
     visible,

@@ -7,6 +7,7 @@ import { ListPhrases } from './listPhrases';
 import { fetchDocumentsTitle } from '../../store/actionCreators/documents';
 import { useDispatch } from 'react-redux';
 import { PreloaderWithLayout } from '../preloader/preloaderWithLayout';
+import { Text } from '../ui';
 
 export const KeywordsBlock: React.FC = () => {
     const [documentId, setDocumentId] = useState<string>('');
@@ -61,7 +62,7 @@ export const KeywordsBlock: React.FC = () => {
     const isNotKeywords = !loading && !keywords?.length;
     return (
         <div className={styles.keywordsBlock}>
-            <h1>Ключевые слова</h1>
+            <Text type="h1">Ключевые слова</Text>
             <SettingsBlock
                 onChangeDocumentId={onChangeDocumentId}
                 onChangeMode={onChangeMode}
@@ -78,7 +79,7 @@ export const KeywordsBlock: React.FC = () => {
             )}
             {isKeywords && (
                 <div className={styles.keywords}>
-                    <h3>Список ключевых слов (словосочетаний)</h3>
+                    <Text type="h3">Список ключевых слов (словосочетаний)</Text>
                     <div className={styles.keywordsInner}>
                         <ListPhrases keywords={keywords} mode={mode} />
                     </div>

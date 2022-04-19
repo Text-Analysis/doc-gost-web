@@ -19,9 +19,9 @@
 .keywordsBlock {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 80vw;
   height: 100%;
-  overflow: scroll;
+  overflow-y: scroll;
   padding-left: 85px;
   padding-right: 50px;
   padding-top: 40px;
@@ -34,8 +34,6 @@
     width: 100%;
     margin-top: 40px;
     h2 {
-      font-size: 25px;
-      font-weight: normal;
       margin-bottom: 15px;
     }
     .settings {
@@ -56,8 +54,6 @@
             width: 300px;
           }
           h3 {
-            font-size: 18px;
-            font-weight: lighter;
             margin-bottom: 10px;
           }
           &:nth-child(1) {
@@ -91,10 +87,6 @@
     box-shadow: 0 0 4px var(--black25);
     padding: 20px;
     margin-bottom: 30px;
-    h3 {
-      font-size: 18px;
-      font-weight: lighter;
-    }
     .keywordsInner {
       overflow-y: scroll;
       .listKeywords {
