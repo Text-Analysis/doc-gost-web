@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { LayoutBlock } from '../layoutBlock/layoutBlock';
-import { Alert, Button, Input } from '../ui';
+import { Alert, Button, Input, Text } from '../ui';
 import { LayoutTree } from '../tree/tree';
 import styles from './recognitionBlock.module.scss';
 import { useTypeSelector } from '../../hooks/useTypeSelector';
@@ -124,10 +124,10 @@ export const RecognitionBlock: React.FC = () => {
                         <LayoutTree data={document.structure} />
                     )}
                     {!document.structure && !loading && (
-                        <span className={styles.notFindText}>
+                        <Text type="description">
                             Введите название, выберите документ, чтобы получить
                             результат
-                        </span>
+                        </Text>
                     )}
                     {loading && <PreloaderWithLayout />}
                     <Alert

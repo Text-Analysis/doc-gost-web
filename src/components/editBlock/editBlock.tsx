@@ -4,7 +4,7 @@ import { fetchDocumentsTitle } from '../../store/actionCreators/documents';
 import { useDispatch } from 'react-redux';
 import styles from './editBlock.module.scss';
 import { LayoutTree } from '../tree/tree';
-import { Button, Alert, SelectDoc } from '../ui';
+import { Button, Alert, SelectDoc, Text } from '../ui';
 import {
     fetchDocument,
     setZeroDocument,
@@ -91,9 +91,9 @@ export const EditBlock: React.FC = () => {
                         <LayoutTree data={document.structure} />
                     )}
                     {!document.structure && !loading && (
-                        <span className={styles.notFindText}>
+                        <Text type="description">
                             Выберите документ, чтобы получить информацию
-                        </span>
+                        </Text>
                     )}
                     <Alert
                         isError={isErrorUpdate}

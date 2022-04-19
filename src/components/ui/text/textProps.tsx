@@ -5,6 +5,6 @@ export interface IText
         HTMLAttributes<HTMLHeadingElement | HTMLParagraphElement>,
         HTMLHeadingElement | HTMLParagraphElement
     > {
-    type?: 'h1' | 'h2' | 'h3' | 'p';
+    type?: 'h1' | 'h2' | 'h3' | 'p' | 'description';
     children: React.ReactNode;
 }
