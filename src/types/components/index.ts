@@ -2,7 +2,6 @@ import React, {
     DetailedHTMLProps,
     Dispatch,
     HTMLAttributes,
-    InputHTMLAttributes,
     SetStateAction,
 } from 'react';
 
@@ -36,29 +35,4 @@ export interface ILayoutBlock {
     sectionName: string;
     actions: React.ReactNode;
     mainPart: React.ReactNode;
-}
-
-export interface IInput
-    extends DetailedHTMLProps<
-        InputHTMLAttributes<HTMLInputElement>,
-        HTMLInputElement
-    > {
-    isError?: boolean;
-}
-
-export interface IAlert
-    extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-    children: React.ReactNode;
-    isError: boolean;
-    visible: boolean;
-}
-
-export interface IButton
-    extends DetailedHTMLProps<
-        HTMLAttributes<HTMLButtonElement>,
-        HTMLButtonElement
-    > {
-    children: React.ReactNode;
-    colorBtn: 'green' | 'blue';
-    disable?: boolean;
 }

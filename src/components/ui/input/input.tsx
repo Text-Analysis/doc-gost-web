@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import styles from './input.module.scss';
 import cn from 'classnames';
-import { IInput } from '../../../types/components';
+import { IInput } from './inputProps';
 
 export const Input: React.FC<IInput> = ({ type, isError, ...props }) => {
     const inputFileRef = useRef() as React.MutableRefObject<HTMLInputElement>;

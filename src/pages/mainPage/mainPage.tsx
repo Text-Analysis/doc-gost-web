@@ -10,7 +10,7 @@ import styles from './mainPage.module.scss';
 import { AboutBlock } from '../../components/aboutBlock/aboutBlock';
 
 export const MainPage: React.FC = () => {
-    const [activeSection, setActiveSection] = useState<number>(0);
+    const [activeSection, setActiveSection] = useState<number>(4);
 
     const changeBlock = () => {
         switch (activeSection) {

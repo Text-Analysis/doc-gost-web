@@ -28,6 +28,10 @@
         white-space: nowrap;
         overflow-x: auto;
         width: 90%;
+        &::-webkit-scrollbar {
+          width: 0;
+          height: 0;
+        }
       }
       svg {
         width: 10%;

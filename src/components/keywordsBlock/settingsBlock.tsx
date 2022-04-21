@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, SelectDoc, SelectMode } from '../ui';
+import { Button, SelectDoc, SelectMode, Text } from '../ui';
 import { modesKeywords } from '../../constants';
 import styles from './keywordsBlock.module.scss';
 import { useTypeSelector } from '../../hooks/useTypeSelector';
@@ -18,11 +18,11 @@ export const SettingsBlock: React.FC<ISettingsBlock> = ({
     const { documents } = useTypeSelector(documentTitlesSelector);
     return (
         <div className={styles.settingsBlock}>
-            <h2>Настройки</h2>
+            <Text type="h2">Настройки</Text>
             <div className={styles.settings}>
                 <div className={styles.settingBlock}>
                     <div className={styles.setting}>
-                        <h3>Выберите документ</h3>
+                        <Text type="h3">Выберите документ</Text>
                         <SelectDoc
                             data={documents}
                             className={styles.select}
@@ -30,7 +30,7 @@ export const SettingsBlock: React.FC<ISettingsBlock> = ({
                         />
                     </div>
                     <div className={styles.setting}>
-                        <h3>Выберите режим выделения</h3>
+                        <Text type="h3">Выберите режим выделения</Text>
                         <SelectMode
                             data={modesKeywords}
                             className={styles.select}
@@ -40,7 +40,7 @@ export const SettingsBlock: React.FC<ISettingsBlock> = ({
                 </div>
                 <div className={styles.settingBlock}>
                     <div className={styles.setting}>
-                        <h3>Выберите раздел</h3>
+                        <Text type="h3">Выберите раздел</Text>
                         <SelectSection
                             disabled={!sections.length}
                             data={sections}
