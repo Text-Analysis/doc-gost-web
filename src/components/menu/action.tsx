@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './menu.module.scss';
 import cn from 'classnames';
-import { IAction } from '../../types/components';
+import { IAction } from './menuProps';
 
 const Action: React.FC<IAction> = ({ children, active, ...props }) => {
     return (

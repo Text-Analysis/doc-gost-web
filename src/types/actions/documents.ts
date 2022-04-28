@@ -1,6 +1,6 @@
 export interface IDocument {
     id: string;
-    documentName: string;
+    name: string;
 }
 
 export interface DocumentsState {

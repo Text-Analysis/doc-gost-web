@@ -1,7 +1,7 @@
 import React from 'react';
 import { Section } from '../section/section';
 import styles from './tree.module.scss';
-import { ILayout, ITree } from '../../types/components';
+import { ILayout, ITree } from './treeProps';
 
 const Tree: React.FC<ITree> = ({ data }) => {
     return (

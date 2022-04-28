@@ -1,0 +1,22 @@
+.line {
+  background: var(--greyDim);
+  margin: 20px 0 20px 0;
+  width: 100%;
+  height: 1px;
+}
+.sectionName {
+  margin-top: 40px;
+}
+.actions {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 80px;
+  margin-bottom: 15px;
+}
+.mainPart{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+

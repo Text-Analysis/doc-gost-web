@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from 'react';
 import styles from './section.module.scss';
 import { ReactComponent as Arrow } from '../../assets/arrow.svg';
 import cn from 'classnames';
-import { ISection } from '../../types/components';
+import { ISection } from './sectionProps';
 import { useTypeSelector } from '../../hooks/useTypeSelector';
 import { useDispatch } from 'react-redux';
 import { editSectionDocument } from '../../store/actionCreators/document';
