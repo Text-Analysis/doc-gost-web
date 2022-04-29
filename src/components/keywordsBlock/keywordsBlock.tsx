@@ -8,6 +8,7 @@ import { fetchDocumentsTitle } from '../../store/actionCreators/documents';
 import { useDispatch } from 'react-redux';
 import { PreloaderWithLayout } from '../preloader/preloaderWithLayout';
 import { Text } from '../ui';
+import { LayoutDefault } from '../layouts/layoutDefault/layoutDefault';
 
 export const KeywordsBlock: React.FC = () => {
     const [documentId, setDocumentId] = useState<string>('');
@@ -61,8 +62,10 @@ export const KeywordsBlock: React.FC = () => {
     const isKeywords = !loading && keywords?.length;
     const isNotKeywords = !loading && !keywords?.length;
     return (
-        <div className={styles.keywordsBlock}>
-            <Text type="h1">Ключевые слова</Text>
+        <LayoutDefault
+            sectionName={'Ключевые слова'}
+            className={styles.keywordsBlock}
+        >
             <SettingsBlock
                 onChangeDocumentId={onChangeDocumentId}
                 onChangeMode={onChangeMode}
@@ -86,6 +89,6 @@ export const KeywordsBlock: React.FC = () => {
                 </div>
             )}
             {loading && <PreloaderWithLayout />}
-        </div>
+        </LayoutDefault>
     );
 };

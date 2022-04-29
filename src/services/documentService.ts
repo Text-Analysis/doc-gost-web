@@ -10,21 +10,21 @@ import { IData, IDocumentFull } from '../types/actions/document';
 
 class DocumentService extends Api {
     public getDocuments() {
-        return this.get<RequestDocuments>('/specifications');
+        return this.get<RequestDocuments>('/documents');
     }
 
     public getDocument(id: string) {
-        return this.get<IDocumentFull>(`/specifications/${id}`);
+        return this.get<IDocumentFull>(`/documents/${id}`);
     }
 
     public updateDocument(id: string, obj: IData[]) {
-        return this.put<string, IUpdateDocumentProps>(`/specifications/${id}`, {
+        return this.put<string, IUpdateDocumentProps>(`/documents/${id}`, {
             structure: obj,
         });
     }
 
     public createDocument(name: string, obj: IData[]) {
-        return this.post<string, ICreateDocumentProps>('/specifications/', {
+        return this.post<string, ICreateDocumentProps>('/documents', {
             name: name,
             structure: obj,
         });
@@ -37,7 +37,7 @@ class DocumentService extends Api {
     public parseDocument(file: File) {
         const formData = new FormData();
         formData.set('file', file);
-        return this.post<IData[], FormData>('/file', formData);
+        return this.post<IData[], FormData>('/files', formData);
     }
 
     public getSections(id: string) {
@@ -48,21 +48,19 @@ class DocumentService extends Api {
         if (mode === 'combine' || mode === 'tf_idf') {
             if (section) {
                 return this.get<IKeywordsTypeOne>(
-                    `/specifications/${id}/keywords?mode=${mode}&section=${section}`
+                    `/documents/${id}/keywords?mode=${mode}&section_name=${section}`
                 );
             }
             return this.get<IKeywordsTypeOne>(
-                `/specifications/${id}/keywords?mode=${mode}`
+                `/documents/${id}/keywords?mode=${mode}`
             );
         }
         if (section) {
             return this.get<string[]>(
-                `/specifications/${id}/keywords?mode=${mode}&section=${section}`
+                `/documents/${id}/keywords?mode=${mode}&section_name=${section}`
             );
         }
-        return this.get<string[]>(
-            `/specifications/${id}/keywords?mode=${mode}`
-        );
+        return this.get<string[]>(`/documents/${id}/keywords?mode=${mode}`);
     }
 }
 

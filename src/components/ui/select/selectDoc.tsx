@@ -6,7 +6,7 @@ export const SelectDoc: React.FC<ISelectDoc> = ({ data, ...props }) => (
     <Select {...props}>
         {data.map((item) => (
             <option key={item.id} value={item.id}>
-                {item.documentName}
+                {item.name}
             </option>
         ))}
     </Select>

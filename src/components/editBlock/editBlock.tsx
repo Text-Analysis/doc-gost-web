@@ -9,7 +9,7 @@ import {
     fetchDocument,
     setZeroDocument,
 } from '../../store/actionCreators/document';
-import { LayoutBlock } from '../layoutBlock/layoutBlock';
+import { LayoutAdd } from '../layouts/layoutAdd/layoutAdd';
 import DocumentService from '../../services/documentService';
 import {
     documentSelector,
@@ -67,7 +67,7 @@ export const EditBlock: React.FC = () => {
     };
 
     return (
-        <LayoutBlock
+        <LayoutAdd
             sectionName={'Редактирование документа'}
             actions={
                 <div className={styles.action}>

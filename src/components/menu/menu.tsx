@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './menu.module.scss';
 import Action from './action';
-import { IMenu } from '../../types/components';
+import { IMenu } from './menuProps';
 
 export const Menu: React.FC<IMenu> = ({ activeSection, setSection }) => {
     return (

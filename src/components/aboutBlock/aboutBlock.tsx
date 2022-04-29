@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './aboutBlock.module.scss';
 import { Text } from '../ui';
+import { LayoutDefault } from '../layouts/layoutDefault/layoutDefault';
 
 export const AboutBlock: React.FC = () => {
     return (
-        <article className={styles.aboutBlock}>
-            <Text type="h1">О проекте</Text>
+        <LayoutDefault sectionName={'О проекте'} className={styles.aboutBlock}>
             <section>
                 <Text type="h2">Актуальность проекта</Text>
                 <Text>
@@ -204,6 +204,6 @@ export const AboutBlock: React.FC = () => {
                 Instagram запрещён в России: компания-владелец Meta признана в
                 России экстремистской организацией.
             </Text>
-        </article>
+        </LayoutDefault>
     );
 };

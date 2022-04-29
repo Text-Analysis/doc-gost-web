@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { LayoutBlock } from '../layoutBlock/layoutBlock';
+import { LayoutAdd } from '../layouts/layoutAdd/layoutAdd';
 import styles from './createBlock.module.scss';
 import { Input, Button, Alert } from '../ui';
 import { useDispatch } from 'react-redux';
@@ -47,7 +47,7 @@ export const CreateBlock: React.FC = () => {
 
     const documentFetch = document.structure && !loading;
     return (
-        <LayoutBlock
+        <LayoutAdd
             sectionName={'Создание документа'}
             actions={
                 <div className={styles.action}>
