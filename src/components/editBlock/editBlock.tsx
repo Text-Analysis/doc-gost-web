@@ -9,12 +9,13 @@ import {
     fetchDocument,
     setZeroDocument,
 } from '../../store/actionCreators/document';
-import { LayoutAdd } from '../layouts/layoutAdd/layoutAdd';
+import { LayoutTypeOne } from '../layouts';
 import DocumentService from '../../services/documentService';
 import {
     documentSelector,
     documentTitlesSelector,
 } from '../../store/selectors';
+import { PreloaderWithLayout } from '../preloader/preloaderWithLayout';
 
 export const EditBlock: React.FC = () => {
     const dispatch = useDispatch();
@@ -67,7 +68,7 @@ export const EditBlock: React.FC = () => {
     };
 
     return (
-        <LayoutAdd
+        <LayoutTypeOne
             sectionName={'Редактирование документа'}
             actions={
                 <div className={styles.action}>
@@ -95,6 +96,7 @@ export const EditBlock: React.FC = () => {
                             Выберите документ, чтобы получить информацию
                         </Text>
                     )}
+                    {loading && <PreloaderWithLayout />}
                     <Alert
                         isError={isErrorUpdate}
                         visible={isAlert}

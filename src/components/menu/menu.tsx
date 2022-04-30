@@ -5,9 +5,9 @@ import { IMenu } from './menuProps';
 
 export const Menu: React.FC<IMenu> = ({ activeSection, setSection }) => {
     return (
-        <div className={styles.menu}>
+        <header className={styles.menu}>
             <span className={styles.title}>SRS parser</span>
-            <div className={styles.actions}>
+            <section className={styles.actions}>
                 <Action
                     active={activeSection === 0}
                     onClick={() => setSection(0)}
@@ -32,15 +32,21 @@ export const Menu: React.FC<IMenu> = ({ activeSection, setSection }) => {
                 >
                     Ключевые слова
                 </Action>
-            </div>
-            <div className={styles.aboutProject}>
+                <Action
+                    active={activeSection === 4}
+                    onClick={() => setSection(4)}
+                >
+                    Настройки сервиса
+                </Action>
+            </section>
+            <section className={styles.aboutProject}>
                 <button
                     className={styles.aboutProject}
-                    onClick={() => setSection(4)}
+                    onClick={() => setSection(5)}
                 >
                     О проекте
                 </button>
-            </div>
-        </div>
+            </section>
+        </header>
     );
 };

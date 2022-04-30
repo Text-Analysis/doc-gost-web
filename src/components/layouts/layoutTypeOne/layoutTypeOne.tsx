@@ -1,18 +1,18 @@
 import React from 'react';
-import styles from './layoutAdd.module.scss';
-import { ILayoutAdd } from './layoutAddProps';
-import { LayoutDefault } from '../layoutDefault/layoutDefault';
+import styles from './layoutTypeOne.module.scss';
+import { ILayoutAdd } from './layoutTypeOneProps';
+import { Layout } from '../layout/layout';
 
-export const LayoutAdd: React.FC<ILayoutAdd> = ({
+export const LayoutTypeOne: React.FC<ILayoutAdd> = ({
     sectionName,
     actions,
     mainPart,
 }) => {
     return (
-        <LayoutDefault sectionName={sectionName}>
+        <Layout sectionName={sectionName}>
             <section className={styles.actions}>{actions}</section>
             <div className={styles.line} />
             <section className={styles.mainPart}>{mainPart}</section>
-        </LayoutDefault>
+        </Layout>
     );
 };

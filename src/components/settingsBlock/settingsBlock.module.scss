@@ -1,0 +1,15 @@
+.templateSection {
+  margin-top: 40px;
+  .settings {
+    display: flex;
+    margin-top: 15px;
+    .setting {
+      h3 {
+        margin-bottom: 10px;
+      }
+      select {
+        width: 300px;
+      }
+    }
+  }
+}

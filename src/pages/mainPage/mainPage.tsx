@@ -8,10 +8,10 @@ import {
 } from '../../components';
 import styles from './mainPage.module.scss';
 import { AboutBlock } from '../../components/aboutBlock/aboutBlock';
+import { SettingsBlock } from '../../components/settingsBlock/settingsBlock';
 
 export const MainPage: React.FC = () => {
-    const [activeSection, setActiveSection] = useState<number>(4);
-
+    const [activeSection, setActiveSection] = useState<number>(5);
     const changeBlock = () => {
         switch (activeSection) {
             case 0:
@@ -23,6 +23,8 @@ export const MainPage: React.FC = () => {
             case 3:
                 return <KeywordsBlock />;
             case 4:
+                return <SettingsBlock />;
+            case 5:
                 return <AboutBlock />;
         }
     };
