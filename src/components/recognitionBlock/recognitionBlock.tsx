@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { LayoutAdd } from '../layouts/layoutAdd/layoutAdd';
+import { LayoutTypeOne } from '../layouts/layoutTypeOne/layoutTypeOne';
 import { Alert, Button, Input, Text } from '../ui';
 import { LayoutTree } from '../tree/tree';
 import styles from './recognitionBlock.module.scss';
@@ -83,7 +83,7 @@ export const RecognitionBlock: React.FC = () => {
     };
 
     return (
-        <LayoutAdd
+        <LayoutTypeOne
             sectionName={'Распознавание документа'}
             actions={
                 <>

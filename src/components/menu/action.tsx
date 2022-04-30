@@ -5,12 +5,12 @@ import { IAction } from './menuProps';
 
 const Action: React.FC<IAction> = ({ children, active, ...props }) => {
     return (
-        <div
+        <section
             className={cn(styles.action, { [styles.activeAction]: active })}
             {...props}
         >
             {children}
-        </div>
+        </section>
     );
 };
 
