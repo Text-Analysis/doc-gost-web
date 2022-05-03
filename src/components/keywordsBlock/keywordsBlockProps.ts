@@ -1,5 +1,5 @@
-import { IKeywordsTypeOne, Mode } from '../../types/api';
 import { ChangeEvent } from 'react';
+import { IKeywordsTypeOne, Mode } from '../../services/serviceProps';
 
 export interface IListPhrases {
     keywords: IKeywordsTypeOne | string[] | undefined;

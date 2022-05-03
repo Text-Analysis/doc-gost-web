@@ -6,7 +6,7 @@ import { IMenu } from './menuProps';
 export const Menu: React.FC<IMenu> = ({ activeSection, setSection }) => {
     return (
         <header className={styles.menu}>
-            <span className={styles.title}>SRS parser</span>
+            <span className={styles.title}>TAS</span>
             <section className={styles.actions}>
                 <Action
                     active={activeSection === 0}

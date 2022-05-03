@@ -1,11 +1,11 @@
 import React from 'react';
-import { Button, SelectDoc, SelectMode, Text } from '../ui';
+import { Button, SelectEntity, SelectMode, Text } from '../ui';
 import { modesKeywords } from '../../constants';
 import styles from './keywordsBlock.module.scss';
 import { useTypeSelector } from '../../hooks/useTypeSelector';
-import { documentTitlesSelector } from '../../store/selectors';
 import { ISettingsBlock } from './keywordsBlockProps';
 import { SelectSection } from '../ui/select';
+import { documentSelector } from '../../store/selectors';
 
 export const SettingsBlock: React.FC<ISettingsBlock> = ({
     onChangeDocumentId,
@@ -15,7 +15,7 @@ export const SettingsBlock: React.FC<ISettingsBlock> = ({
     sections,
     loading,
 }) => {
-    const { documents } = useTypeSelector(documentTitlesSelector);
+    const { documents } = useTypeSelector(documentSelector);
     return (
         <div className={styles.settingsBlock}>
             <Text type="h2">Настройки</Text>
@@ -23,7 +23,7 @@ export const SettingsBlock: React.FC<ISettingsBlock> = ({
                 <div className={styles.settingBlock}>
                     <div className={styles.setting}>
                         <Text type="h3">Выберите документ</Text>
-                        <SelectDoc
+                        <SelectEntity
                             data={documents}
                             className={styles.select}
                             onChange={onChangeDocumentId}

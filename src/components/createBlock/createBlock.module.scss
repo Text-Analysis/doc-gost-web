@@ -1,6 +1,15 @@
-.action {
+.actions {
   display: flex;
-  button {
-    margin-left: 40px;
+  flex-direction: column;
+  & > div {
+    &:nth-child(n + 2) {
+      margin-top: 20px;
+    }
+  }
+  .action {
+    display: flex;
+    button {
+      margin-left: 40px;
+    }
   }
 }

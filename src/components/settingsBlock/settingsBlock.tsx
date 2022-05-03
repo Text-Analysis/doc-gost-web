@@ -1,6 +1,6 @@
 import React from 'react';
 import { LayoutTypeTwo } from '../layouts';
-import { SelectDoc, Text } from '../ui';
+import { SelectEntity, Text } from '../ui';
 import styles from './settingsBlock.module.scss';
 
 export const SettingsBlock: React.FC = () => {
@@ -11,7 +11,7 @@ export const SettingsBlock: React.FC = () => {
                 <div className={styles.settings}>
                     <div className={styles.setting}>
                         <Text type="h3">Выберите стандартный шаблон</Text>
-                        <SelectDoc data={[]} />
+                        <SelectEntity data={[]} />
                     </div>
                 </div>
             </section>

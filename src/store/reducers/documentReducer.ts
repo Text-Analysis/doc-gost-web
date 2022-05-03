@@ -2,11 +2,12 @@ import {
     DocumentAction,
     DocumentActionTypes,
     DocumentState,
-    IDocumentFull,
-} from '../../types/actions/document';
+    IDocument,
+} from '../types/document';
 
 const initialState: DocumentState = {
-    document: {} as IDocumentFull,
+    document: {} as IDocument,
+    documents: [],
     loading: false,
     error: null,
 };
@@ -18,12 +19,18 @@ export const documentReducer = (
     switch (action.type) {
         case DocumentActionTypes.FETCH_DOCUMENT:
             return {
-                document: {} as IDocumentFull,
+                ...state,
+                document: {} as IDocument,
                 loading: true,
                 error: null,
             };
         case DocumentActionTypes.FETCH_DOCUMENT_SUCCESS:
-            return { document: action.payload, loading: false, error: null };
+            return {
+                ...state,
+                document: action.payload,
+                loading: false,
+                error: null,
+            };
 
         case DocumentActionTypes.EDIT_SECTION_DOCUMENT:
             return {
@@ -33,14 +40,16 @@ export const documentReducer = (
 
         case DocumentActionTypes.FETCH_DOCUMENT_ERROR:
             return {
-                document: {} as IDocumentFull,
+                ...state,
+                document: {} as IDocument,
                 loading: false,
                 error: null,
             };
 
         case DocumentActionTypes.SET_ZERO_DOCUMENT:
             return {
-                document: {} as IDocumentFull,
+                ...state,
+                document: {} as IDocument,
                 loading: false,
                 error: null,
             };
@@ -54,6 +63,7 @@ export const documentReducer = (
 
         case DocumentActionTypes.PARSE_DOCUMENT_SUCCESS:
             return {
+                ...state,
                 document: { ...state.document, structure: action.payload },
                 loading: false,
                 error: null,
@@ -61,9 +71,26 @@ export const documentReducer = (
 
         case DocumentActionTypes.PARSE_DOCUMENT_ERROR:
             return {
-                document: {} as IDocumentFull,
+                ...state,
+                document: {} as IDocument,
                 loading: false,
                 error: null,
+            };
+        case DocumentActionTypes.FETCH_DOCUMENTS:
+            return { ...state, documents: [], loading: true, error: null };
+        case DocumentActionTypes.FETCH_DOCUMENTS_SUCCESS:
+            return {
+                ...state,
+                documents: action.payload,
+                loading: false,
+                error: null,
+            };
+        case DocumentActionTypes.FETCH_DOCUMENTS_ERROR:
+            return {
+                ...state,
+                documents: [],
+                loading: false,
+                error: action.payload,
             };
 
         default:

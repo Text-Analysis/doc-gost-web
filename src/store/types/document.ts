@@ -1,30 +1,29 @@
-import { IDocument } from './documents';
+import { IData, IEntity } from './index';
 
-export interface IDocumentFull extends IDocument {
+export interface IDocument extends IEntity {
+    templateId: string;
     structure: IData[];
 }
 
-export interface IData {
-    name: string;
-    text?: string;
-    children?: IData[];
-}
-
 export interface DocumentState {
-    document: IDocumentFull;
+    document: IDocument;
+    documents: IEntity[];
     loading: boolean;
     error: string | null;
 }
 
 export enum DocumentActionTypes {
     FETCH_DOCUMENT = 'FETCH_DOCUMENT',
-    SET_ZERO_DOCUMENT = 'SET_ZERO_DOCUMENT',
     FETCH_DOCUMENT_SUCCESS = 'FETCH_DOCUMENT_SUCCESS',
-    EDIT_SECTION_DOCUMENT = 'EDIT_SECTION_DOCUMENT',
     FETCH_DOCUMENT_ERROR = 'FETCH_DOCUMENT_ERROR',
     PARSE_DOCUMENT = 'PARSE_DOCUMENT',
     PARSE_DOCUMENT_SUCCESS = 'PARSE_DOCUMENT_SUCCESS',
     PARSE_DOCUMENT_ERROR = 'PARSE_DOCUMENT_ERROR',
+    FETCH_DOCUMENTS = 'FETCH_DOCUMENTS',
+    FETCH_DOCUMENTS_SUCCESS = 'FETCH_DOCUMENTS_SUCCESS',
+    FETCH_DOCUMENTS_ERROR = 'FETCH_DOCUMENTS_ERROR',
+    SET_ZERO_DOCUMENT = 'SET_ZERO_DOCUMENT',
+    EDIT_SECTION_DOCUMENT = 'EDIT_SECTION_DOCUMENT',
 }
 
 interface ParseDocumentAction {
@@ -47,7 +46,7 @@ interface FetchDocumentAction {
 
 interface FetchDocumentActionSuccess {
     type: DocumentActionTypes.FETCH_DOCUMENT_SUCCESS;
-    payload: IDocumentFull;
+    payload: IDocument;
 }
 
 interface EditSectionDocument {
@@ -64,6 +63,20 @@ interface SetZeroDocument {
     type: DocumentActionTypes.SET_ZERO_DOCUMENT;
 }
 
+interface FetchDocumentsAction {
+    type: DocumentActionTypes.FETCH_DOCUMENTS;
+}
+
+interface FetchDocumentsActionSuccess {
+    type: DocumentActionTypes.FETCH_DOCUMENTS_SUCCESS;
+    payload: IEntity[];
+}
+
+interface FetchDocumentsActionError {
+    type: DocumentActionTypes.FETCH_DOCUMENTS_ERROR;
+    payload: any;
+}
+
 export type DocumentAction =
     | FetchDocumentAction
     | FetchDocumentActionSuccess
@@ -72,4 +85,7 @@ export type DocumentAction =
     | SetZeroDocument
     | ParseDocumentAction
     | ParseDocumentActionSuccess
-    | ParseDocumentActionError;
+    | ParseDocumentActionError
+    | FetchDocumentsAction
+    | FetchDocumentsActionSuccess
+    | FetchDocumentsActionError;

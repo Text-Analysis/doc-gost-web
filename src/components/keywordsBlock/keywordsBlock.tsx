@@ -1,14 +1,14 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import styles from './keywordsBlock.module.scss';
 import DocumentService from '../../services/documentService';
-import { IKeywordsTypeOne, Mode } from '../../types/api';
 import { SettingsBlock } from './settingsBlock';
 import { ListPhrases } from './listPhrases';
-import { fetchDocumentsTitle } from '../../store/actionCreators/documents';
 import { useDispatch } from 'react-redux';
 import { PreloaderWithLayout } from '../preloader/preloaderWithLayout';
 import { Text } from '../ui';
 import { LayoutTypeTwo } from '../layouts';
+import { fetchShortDocuments } from '../../store/actionCreators/document';
+import { IKeywordsTypeOne, Mode } from '../../services/serviceProps';
 
 export const KeywordsBlock: React.FC = () => {
     const [documentId, setDocumentId] = useState<string>('');
@@ -20,7 +20,7 @@ export const KeywordsBlock: React.FC = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchDocumentsTitle());
+        dispatch(fetchShortDocuments());
     }, []);
 
     useEffect(() => {

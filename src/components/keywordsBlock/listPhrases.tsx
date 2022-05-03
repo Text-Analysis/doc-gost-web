@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import styles from './keywordsBlock.module.scss';
-import { IKeywordsTypeOne } from '../../types/api';
 import { IListPhrases } from './keywordsBlockProps';
+import { IKeywordsTypeOne } from '../../services/serviceProps';
 
 export const ListPhrases: React.FC<IListPhrases> = ({ mode, keywords }) => {
     const getKeywordsLayout = useCallback(() => {

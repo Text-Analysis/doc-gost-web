@@ -1,26 +1,22 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useTypeSelector } from '../../hooks/useTypeSelector';
-import { fetchDocumentsTitle } from '../../store/actionCreators/documents';
 import { useDispatch } from 'react-redux';
 import styles from './editBlock.module.scss';
 import { LayoutTree } from '../tree/tree';
-import { Button, Alert, SelectDoc, Text } from '../ui';
+import { Button, Alert, SelectEntity, Text } from '../ui';
 import {
     fetchDocument,
+    fetchShortDocuments,
     setZeroDocument,
 } from '../../store/actionCreators/document';
 import { LayoutTypeOne } from '../layouts';
 import DocumentService from '../../services/documentService';
-import {
-    documentSelector,
-    documentTitlesSelector,
-} from '../../store/selectors';
+import { documentSelector } from '../../store/selectors';
 import { PreloaderWithLayout } from '../preloader/preloaderWithLayout';
 
 export const EditBlock: React.FC = () => {
     const dispatch = useDispatch();
-    const { documents } = useTypeSelector(documentTitlesSelector);
-    const { document, loading } = useTypeSelector(documentSelector);
+    const { document, documents, loading } = useTypeSelector(documentSelector);
     const [documentId, setDocumentId] = useState<string>('');
     const [isAlert, setAlert] = useState<boolean>(false);
     const [isUpdate, setUpdate] = useState<boolean>(false);
@@ -28,7 +24,7 @@ export const EditBlock: React.FC = () => {
     const [selError, setSelError] = useState<boolean>(false);
 
     useEffect(() => {
-        dispatch(fetchDocumentsTitle());
+        dispatch(fetchShortDocuments());
         if (document.structure) {
             dispatch(setZeroDocument());
         }
@@ -72,7 +68,7 @@ export const EditBlock: React.FC = () => {
             sectionName={'Редактирование документа'}
             actions={
                 <div className={styles.action}>
-                    <SelectDoc
+                    <SelectEntity
                         data={documents}
                         onChange={onChangeDocumentId}
                         isError={selError}

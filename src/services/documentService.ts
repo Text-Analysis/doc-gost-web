@@ -4,17 +4,18 @@ import {
     IKeywordsTypeOne,
     IUpdateDocumentProps,
     Mode,
-    RequestDocuments,
-} from '../types/api';
-import { IData, IDocumentFull } from '../types/actions/document';
+    RequestEntities,
+} from './serviceProps';
+import { IDocument } from '../store/types/document';
+import { IData } from '../store/types';
 
 class DocumentService extends Api {
     public getDocuments() {
-        return this.get<RequestDocuments>('/documents');
+        return this.get<RequestEntities>('/documents');
     }
 
     public getDocument(id: string) {
-        return this.get<IDocumentFull>(`/documents/${id}`);
+        return this.get<IDocument>(`/documents/${id}`);
     }
 
     public updateDocument(id: string, obj: IData[]) {
@@ -23,15 +24,12 @@ class DocumentService extends Api {
         });
     }
 
-    public createDocument(name: string, obj: IData[]) {
+    public createDocument(name: string, obj: IData[], templateId: string) {
         return this.post<string, ICreateDocumentProps>('/documents', {
             name: name,
             structure: obj,
+            templateId,
         });
-    }
-
-    public getTemplate(id: string) {
-        return this.get<IDocumentFull>(`/templates/${id}`);
     }
 
     public parseDocument(file: File) {

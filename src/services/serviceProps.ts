@@ -1,8 +1,7 @@
-import { IDocument } from '../actions/documents';
-import { IData } from '../actions/document';
+import { IData, IEntity } from '../store/types';
 
-export interface RequestDocuments {
-    data: IDocument[];
+export interface RequestEntities {
+    data: IEntity[];
 }
 
 export interface IUpdateDocumentProps {
@@ -12,6 +11,7 @@ export interface IUpdateDocumentProps {
 export interface ICreateDocumentProps {
     name: string;
     structure: IData[];
+    templateId: string;
 }
 
 export type Mode = 'tf_idf' | 'pullenti' | 'combine';

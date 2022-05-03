@@ -1,6 +1,7 @@
 import React, { DetailedHTMLProps, SelectHTMLAttributes } from 'react';
-import { IDocument } from '../../../types/actions/documents';
 import { ModesKeywords } from '../../../constants';
+import { IDocument } from '../../../store/types/document';
+import { IEntity } from '../../../store/types';
 
 export interface ISelect
     extends DetailedHTMLProps<
@@ -14,8 +15,8 @@ export interface ISelectDefault extends ISelect {
     children: React.ReactNode;
 }
 
-export interface ISelectDoc extends ISelect {
-    data: IDocument[];
+export interface ISelectEntity extends ISelect {
+    data: IEntity[];
 }
 
 export interface ISelectMode extends ISelect {

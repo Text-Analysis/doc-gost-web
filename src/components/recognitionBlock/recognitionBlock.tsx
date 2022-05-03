@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { LayoutTypeOne } from '../layouts/layoutTypeOne/layoutTypeOne';
+import { LayoutTypeOne } from '../layouts';
 import { Alert, Button, Input, Text } from '../ui';
 import { LayoutTree } from '../tree/tree';
 import styles from './recognitionBlock.module.scss';
