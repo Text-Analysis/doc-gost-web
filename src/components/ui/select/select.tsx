@@ -8,6 +8,7 @@ export const Select: React.FC<ISelectDefault> = ({
     className,
     disabled,
     isError,
+    defaultOption,
     ...props
 }) => {
     return (
@@ -21,7 +22,7 @@ export const Select: React.FC<ISelectDefault> = ({
                 })}
             >
                 <option value="" disabled selected>
-                    Не выбрано
+                    {defaultOption ? defaultOption : 'Выберите сущность'}
                 </option>
                 {children}
             </select>

@@ -13,16 +13,20 @@ export interface ISelect
 
 export interface ISelectDefault extends ISelect {
     children: React.ReactNode;
+    defaultOption?: string;
 }
 
 export interface ISelectEntity extends ISelect {
+    defaultOption?: string;
     data: IEntity[];
 }
 
 export interface ISelectMode extends ISelect {
+    defaultOption?: string;
     data: ModesKeywords;
 }
 
 export interface ISelectSection extends ISelect {
+    defaultOption?: string;
     data: string[];
 }

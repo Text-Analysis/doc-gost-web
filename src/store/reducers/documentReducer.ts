@@ -92,7 +92,11 @@ export const documentReducer = (
                 loading: false,
                 error: action.payload,
             };
-
+        case DocumentActionTypes.SET_STRUCTURE_DOCUMENT:
+            return {
+                ...state,
+                document: { ...state.document, structure: action.payload },
+            };
         default:
             return state;
     }

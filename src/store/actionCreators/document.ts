@@ -25,12 +25,15 @@ export const fetchDocument = (id: string) => {
     };
 };
 
-export const uploadDocument = (file: File) => {
+export const uploadDocument = (file: File, templateId: string) => {
     return async (dispatch: Dispatch<DocumentAction>) => {
         try {
             dispatch({ type: DocumentActionTypes.PARSE_DOCUMENT });
 
-            const docStructure = await DocumentService.parseDocument(file);
+            const docStructure = await DocumentService.parseDocument(
+                file,
+                templateId
+            );
 
             dispatch({
                 type: DocumentActionTypes.PARSE_DOCUMENT_SUCCESS,
@@ -55,6 +58,15 @@ export const editSectionDocument = (
         dispatch({
             type: DocumentActionTypes.EDIT_SECTION_DOCUMENT,
             payload: data,
+        });
+    };
+};
+
+export const setStructureDocument = (structure: IData[]) => {
+    return (dispatch: Dispatch<DocumentAction>) => {
+        dispatch({
+            type: DocumentActionTypes.SET_STRUCTURE_DOCUMENT,
+            payload: structure,
         });
     };
 };

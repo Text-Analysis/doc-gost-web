@@ -24,6 +24,7 @@ export enum DocumentActionTypes {
     FETCH_DOCUMENTS_ERROR = 'FETCH_DOCUMENTS_ERROR',
     SET_ZERO_DOCUMENT = 'SET_ZERO_DOCUMENT',
     EDIT_SECTION_DOCUMENT = 'EDIT_SECTION_DOCUMENT',
+    SET_STRUCTURE_DOCUMENT = 'SET_STRUCTURE_DOCUMENT',
 }
 
 interface ParseDocumentAction {
@@ -77,6 +78,11 @@ interface FetchDocumentsActionError {
     payload: any;
 }
 
+interface SetStructureDocumentAction {
+    type: DocumentActionTypes.SET_STRUCTURE_DOCUMENT;
+    payload: IData[];
+}
+
 export type DocumentAction =
     | FetchDocumentAction
     | FetchDocumentActionSuccess
@@ -88,4 +94,5 @@ export type DocumentAction =
     | ParseDocumentActionError
     | FetchDocumentsAction
     | FetchDocumentsActionSuccess
-    | FetchDocumentsActionError;
+    | FetchDocumentsActionError
+    | SetStructureDocumentAction;

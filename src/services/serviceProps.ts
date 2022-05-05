@@ -14,6 +14,11 @@ export interface ICreateDocumentProps {
     templateId: string;
 }
 
+export interface ICreateTemplateProps {
+    name: string;
+    structure: IData[];
+}
+
 export type Mode = 'tf_idf' | 'pullenti' | 'combine';
 
 type IKeywordTypeOne = [string, number];

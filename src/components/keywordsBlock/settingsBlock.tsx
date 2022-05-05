@@ -27,6 +27,7 @@ export const SettingsBlock: React.FC<ISettingsBlock> = ({
                             data={documents}
                             className={styles.select}
                             onChange={onChangeDocumentId}
+                            defaultOption={'Шаблон не выбран'}
                         />
                     </div>
                     <div className={styles.setting}>
@@ -35,6 +36,7 @@ export const SettingsBlock: React.FC<ISettingsBlock> = ({
                             data={modesKeywords}
                             className={styles.select}
                             onChange={onChangeMode}
+                            defaultOption={'Режим не выбран'}
                         />
                     </div>
                 </div>
@@ -46,6 +48,7 @@ export const SettingsBlock: React.FC<ISettingsBlock> = ({
                             data={sections}
                             className={styles.select}
                             onChange={onChangeSection}
+                            defaultOption={'Раздел не выбран'}
                         />
                     </div>
                     <Button

@@ -6,16 +6,18 @@ import { useDispatch } from 'react-redux';
 import { useTypeSelector } from '../../hooks/useTypeSelector';
 import { LayoutTree } from '../tree/tree';
 import DocumentService from '../../services/documentService';
-import { templateSelector } from '../../store/selectors';
+import { documentSelector, templateSelector } from '../../store/selectors';
 import { PreloaderWithLayout } from '../preloader/preloaderWithLayout';
 import {
     fetchTemplate,
     fetchTemplates,
 } from '../../store/actionCreators/template';
+import { setStructureDocument } from '../../store/actionCreators/document';
 
 export const CreateBlock: React.FC = () => {
     const dispatch = useDispatch();
     const { template, templates, loading } = useTypeSelector(templateSelector);
+    const { document } = useTypeSelector(documentSelector);
     const [nameFile, setNameFile] = useState<string>();
     const [isErrorName, setErrorName] = useState<boolean>(false);
     const [isAlert, setAlert] = useState<boolean>(false);
@@ -25,6 +27,11 @@ export const CreateBlock: React.FC = () => {
         dispatch(fetchTemplates());
     }, []);
 
+    useEffect(() => {
+        if (template.structure) {
+            dispatch(setStructureDocument(template.structure));
+        }
+    }, [template.structure]);
     const changeNameFile = (e: ChangeEvent<HTMLInputElement>) => {
         setNameFile(e.target.value);
         setErrorName(false);
@@ -56,7 +63,7 @@ export const CreateBlock: React.FC = () => {
             });
     };
 
-    const documentFetch = template.structure && !loading;
+    const documentFetch = document.structure && !loading;
     return (
         <LayoutTypeOne
             sectionName={'Создание документа'}
@@ -72,12 +79,16 @@ export const CreateBlock: React.FC = () => {
                             Сохранить файл
                         </Button>
                     </div>
-                    <SelectEntity data={templates} onChange={changeTemplate} />
+                    <SelectEntity
+                        data={templates}
+                        onChange={changeTemplate}
+                        defaultOption={'Выберите шаблон'}
+                    />
                 </div>
             }
             mainPart={
                 <>
-                    {documentFetch && <LayoutTree data={template.structure} />}
+                    {documentFetch && <LayoutTree data={document.structure} />}
                     {loading && <PreloaderWithLayout />}
                     <Alert
                         visible={isAlert}

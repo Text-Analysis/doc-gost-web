@@ -6,11 +6,20 @@
   background: var(--blueOne);
   padding: 30px 0;
   min-height: 677px;
-  .title {
-    font-size: 35px;
-    font-weight: 300;
-    color: var(--white);
-    text-align: center;
+  .titleBlock {
+    display: flex;
+    align-items: center;
+    padding-left: 47px;
+    img {
+      width: 70px;
+      margin-right: 25px;
+    }
+    span {
+      font-size: 35px;
+      font-weight: bold;
+      color: var(--white);
+      text-align: center;
+    }
   }
   .actions {
     margin-top: auto;

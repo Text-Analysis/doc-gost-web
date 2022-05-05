@@ -32,9 +32,10 @@ class DocumentService extends Api {
         });
     }
 
-    public parseDocument(file: File) {
+    public parseDocument(file: File, templateId: string) {
         const formData = new FormData();
         formData.set('file', file);
+        formData.set('template_id', templateId);
         return this.post<IData[], FormData>('/files', formData);
     }
 
