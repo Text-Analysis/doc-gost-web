@@ -17,7 +17,6 @@ export const Select: React.FC<ISelectDefault> = ({
                 {...props}
                 disabled={disabled}
                 className={cn({
-                    [styles.disabled]: disabled,
                     [styles.error]: isError,
                 })}
             >

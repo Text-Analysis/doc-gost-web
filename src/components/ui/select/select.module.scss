@@ -16,10 +16,11 @@
     letter-spacing: -0.345714px;
     transition: border ease 0.2s;
     color: var(--blackLight);
+    &:disabled {
+      cursor: auto;
+      opacity: 0.5;
+    }
   }
-}
-.disabled {
-  color: var(--black25) !important;
 }
 
 .error {

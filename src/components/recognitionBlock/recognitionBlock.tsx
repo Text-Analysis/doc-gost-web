@@ -108,12 +108,14 @@ export const RecognitionBlock: React.FC = () => {
                     <div className={styles.action}>
                         <Input
                             type={'file'}
+                            accept={'.docx'}
                             onChange={changeFile}
                             isError={fileError}
                         />
                         <Input
                             placeholder={'Введите название файла'}
                             value={filename}
+                            disabled={!fileRec}
                             isError={fileNameError}
                             onChange={changeFilename}
                         />

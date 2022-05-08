@@ -41,3 +41,11 @@ export const fetchTemplates = () => {
         }
     };
 };
+
+export const setZeroTemplate = () => {
+    return (dispatch: Dispatch<TemplateAction>) => {
+        dispatch({
+            type: TemplateActionTypes.SET_ZERO_TEMPLATE,
+        });
+    };
+};

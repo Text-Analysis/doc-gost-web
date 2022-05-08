@@ -15,6 +15,9 @@
   &:focus{
     border: 1px solid var(--blueThree);
   }
+  &:disabled {
+    opacity: 0.5;
+  }
 }
 
 .error {

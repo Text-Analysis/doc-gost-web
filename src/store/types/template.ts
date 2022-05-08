@@ -18,6 +18,7 @@ export enum TemplateActionTypes {
     FETCH_TEMPLATES = 'FETCH_TEMPLATES',
     FETCH_TEMPLATES_SUCCESS = 'FETCH_TEMPLATES_SUCCESS',
     FETCH_TEMPLATES_ERROR = 'FETCH_TEMPLATES_ERROR',
+    SET_ZERO_TEMPLATE = 'SET_ZERO_TEMPLATE',
 }
 
 interface FetchTemplateAction {
@@ -48,10 +49,15 @@ interface FetchTemplatesActionError {
     payload: any;
 }
 
+interface SetZeroTemplate {
+    type: TemplateActionTypes.SET_ZERO_TEMPLATE;
+}
+
 export type TemplateAction =
     | FetchTemplateAction
     | FetchTemplateActionSuccess
     | FetchTemplateActionError
     | FetchTemplatesAction
     | FetchTemplatesActionSuccess
-    | FetchTemplatesActionError;
+    | FetchTemplatesActionError
+    | SetZeroTemplate;

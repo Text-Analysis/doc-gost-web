@@ -11,8 +11,12 @@ import { PreloaderWithLayout } from '../preloader/preloaderWithLayout';
 import {
     fetchTemplate,
     fetchTemplates,
+    setZeroTemplate,
 } from '../../store/actionCreators/template';
-import { setStructureDocument } from '../../store/actionCreators/document';
+import {
+    setStructureDocument,
+    setZeroDocument,
+} from '../../store/actionCreators/document';
 
 export const CreateBlock: React.FC = () => {
     const dispatch = useDispatch();
@@ -22,16 +26,23 @@ export const CreateBlock: React.FC = () => {
     const [isErrorName, setErrorName] = useState<boolean>(false);
     const [isAlert, setAlert] = useState<boolean>(false);
     const [isErrorSave, setErrorSave] = useState<boolean>(false);
+    const [isNoneFirst, setNoneFirst] = useState<boolean>(false);
 
     useEffect(() => {
         dispatch(fetchTemplates());
+        if (template.structure) {
+            dispatch(setZeroTemplate());
+            dispatch(setZeroDocument());
+        }
+        setNoneFirst(true);
     }, []);
 
     useEffect(() => {
-        if (template.structure) {
+        if (template.structure && isNoneFirst) {
             dispatch(setStructureDocument(template.structure));
         }
     }, [template.structure]);
+
     const changeNameFile = (e: ChangeEvent<HTMLInputElement>) => {
         setNameFile(e.target.value);
         setErrorName(false);

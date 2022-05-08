@@ -59,6 +59,11 @@ export const templateReducer = (
                 loading: false,
                 error: action.payload,
             };
+        case TemplateActionTypes.SET_ZERO_TEMPLATE:
+            return {
+                ...state,
+                template: {} as ITemplate,
+            };
     }
     return state;
 };
