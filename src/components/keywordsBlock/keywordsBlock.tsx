@@ -49,9 +49,13 @@ export const KeywordsBlock: React.FC = () => {
     const getKeywords = () => {
         if (documentId && mode) {
             setLoading(true);
-            DocumentService.getKeywords(documentId, mode, section)
+            DocumentService.generationKeywords(documentId, mode, section)
                 .then((response) => {
                     setKeywords(response.data);
+                    return DocumentService.getKeywords(documentId);
+                })
+                .then((response) => {
+                    setSelectedKeywords(response.data);
                 })
                 .finally(() => {
                     setLoading(false);

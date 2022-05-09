@@ -49,26 +49,32 @@ class DocumentService extends Api {
     }
 
     public getSections(id: string) {
-        return this.get<string[]>(`sections/${id}`);
+        return this.get<string[]>(`/documents/${id}/sections`);
     }
 
-    public getKeywords(id: string, mode: Mode, section = '') {
+    public getKeywords(id: string) {
+        return this.get<string[]>(`/documents/${id}/keywords`);
+    }
+
+    public generationKeywords(id: string, mode: Mode, section = '') {
         if (mode === 'combine' || mode === 'tf_idf') {
             if (section) {
                 return this.get<IKeywordsTypeOne>(
-                    `/documents/${id}/keywords?mode=${mode}&section_name=${section}`
+                    `/documents/${id}/keywords/generation?mode=${mode}&section_name=${section}`
                 );
             }
             return this.get<IKeywordsTypeOne>(
-                `/documents/${id}/keywords?mode=${mode}`
+                `/documents/${id}/keywords/generation?mode=${mode}`
             );
         }
         if (section) {
             return this.get<string[]>(
-                `/documents/${id}/keywords?mode=${mode}&section_name=${section}`
+                `/documents/${id}/keywords/generation?mode=${mode}&section_name=${section}`
             );
         }
-        return this.get<string[]>(`/documents/${id}/keywords?mode=${mode}`);
+        return this.get<string[]>(
+            `/documents/${id}/keywords/generation?mode=${mode}`
+        );
     }
 }
 
