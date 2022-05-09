@@ -16,6 +16,9 @@ class TemplateService extends Api {
             structure: structure,
         });
     }
+    public deleteTemplate(id: string) {
+        return this.delete(`/templates/${id}`);
+    }
 }
 
 export default new TemplateService();

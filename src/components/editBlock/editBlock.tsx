@@ -18,9 +18,12 @@ export const EditBlock: React.FC = () => {
     const dispatch = useDispatch();
     const { document, documents, loading } = useTypeSelector(documentSelector);
     const [documentId, setDocumentId] = useState<string>('');
-    const [isAlert, setAlert] = useState<boolean>(false);
+    const [isAlertUpdate, setAlertUpdate] = useState<boolean>(false);
+    const [isAlertDelete, setAlertDelete] = useState<boolean>(false);
     const [isUpdate, setUpdate] = useState<boolean>(false);
+    const [isDelete, setDelete] = useState<boolean>(false);
     const [isErrorUpdate, setErrorUpdate] = useState<boolean>(false);
+    const [isErrorDelete, setErrorDelete] = useState<boolean>(false);
     const [selError, setSelError] = useState<boolean>(false);
 
     useEffect(() => {
@@ -52,17 +55,37 @@ export const EditBlock: React.FC = () => {
         setUpdate(true);
         DocumentService.updateDocument(document.id, document.structure)
             .then(() => {
-                setUpdate(false);
-                setAlert(true);
                 setErrorUpdate(false);
             })
             .catch(() => {
-                setUpdate(false);
-                setAlert(true);
                 setErrorUpdate(true);
+            })
+            .finally(() => {
+                setAlertUpdate(true);
+                setUpdate(false);
             });
     };
 
+    const deleteDoc = () => {
+        if (!documentId) {
+            setSelError(true);
+            return;
+        }
+        setDelete(true);
+        DocumentService.deleteDocument(documentId)
+            .then(() => {
+                dispatch(setZeroDocument());
+                dispatch(fetchShortDocuments());
+                setErrorDelete(false);
+            })
+            .catch(() => {
+                setErrorDelete(true);
+            })
+            .finally(() => {
+                setAlertDelete(true);
+                setDelete(false);
+            });
+    };
     return (
         <LayoutTypeOne
             sectionName={'Редактирование документа'}
@@ -71,14 +94,22 @@ export const EditBlock: React.FC = () => {
                     <SelectEntity
                         data={documents}
                         onChange={onChangeDocumentId}
+                        disabled={isUpdate || isDelete}
                         isError={selError}
                     />
                     <Button
                         colorBtn={'blue'}
                         onClick={updateDoc}
-                        disable={isUpdate}
+                        disable={isUpdate || isDelete}
                     >
-                        {isUpdate ? 'Сохраняется' : 'Изменить'}
+                        {isUpdate ? 'Сохраняется...' : 'Изменить'}
+                    </Button>
+                    <Button
+                        colorBtn={'blue'}
+                        onClick={deleteDoc}
+                        disable={isUpdate || isDelete}
+                    >
+                        {isDelete ? 'Удаляется...' : 'Удалить'}
                     </Button>
                 </div>
             }
@@ -95,12 +126,21 @@ export const EditBlock: React.FC = () => {
                     {loading && <PreloaderWithLayout />}
                     <Alert
                         isError={isErrorUpdate}
-                        visible={isAlert}
-                        onClick={() => setAlert(false)}
+                        visible={isAlertUpdate}
+                        onClick={() => setAlertUpdate(false)}
                     >
                         {isErrorUpdate
                             ? 'Произошла ошибка при обновлении файла'
                             : 'Файл успешно обновлён'}
+                    </Alert>
+                    <Alert
+                        isError={isErrorDelete}
+                        visible={isAlertDelete}
+                        onClick={() => setAlertDelete(false)}
+                    >
+                        {isErrorDelete
+                            ? 'Произошла ошибка при удалении файла'
+                            : 'Файл успешно удалён'}
                     </Alert>
                 </>
             }

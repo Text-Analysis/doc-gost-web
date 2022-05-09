@@ -18,9 +18,14 @@ class DocumentService extends Api {
         return this.get<IDocument>(`/documents/${id}`);
     }
 
-    public updateDocument(id: string, obj: IData[]) {
-        return this.put<string, IUpdateDocumentProps>(`/documents/${id}`, {
-            structure: obj,
+    public updateDocument(
+        id: string,
+        structure?: IData[],
+        keywords?: string[]
+    ) {
+        return this.patch<string, IUpdateDocumentProps>(`/documents/${id}`, {
+            structure: structure,
+            keywords: keywords,
         });
     }
 
@@ -30,6 +35,10 @@ class DocumentService extends Api {
             structure: obj,
             templateId,
         });
+    }
+
+    public deleteDocument(id: string) {
+        return this.delete(`/documents/${id}`);
     }
 
     public parseDocument(file: File, templateId: string) {

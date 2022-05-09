@@ -1,8 +1,9 @@
 import React, { ChangeEvent, useState } from 'react';
 import styles from '../settingsBlock.module.scss';
-import { Alert, Button, Input } from '../../ui';
+import { Alert, Button, Input, Text } from '../../ui';
 import TemplateService from '../../../services/templateService';
-import { PreloaderWithLayout } from '../../preloader/preloaderWithLayout';
+import { useDispatch } from 'react-redux';
+import { fetchTemplates } from '../../../store/actionCreators/template';
 
 export const Download: React.FC = () => {
     const [templateName, setTemplateName] = useState<string>();
@@ -10,6 +11,8 @@ export const Download: React.FC = () => {
     const [errorName, setErrorName] = useState<boolean>(false);
     const [isAlert, setAlert] = useState<boolean>(false);
     const [isErrorSave, setErrorSave] = useState<boolean>(false);
+    const [isLoading, setLoading] = useState<boolean>(false);
+    const dispatch = useDispatch();
 
     const onChangeTemplate = (event: ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
@@ -43,40 +46,49 @@ export const Download: React.FC = () => {
         if (!templateStructure) {
             return;
         }
+        setLoading(true);
         TemplateService.createTemplate(templateName, templateStructure)
             .then(() => {
+                dispatch(fetchTemplates());
                 setErrorSave(false);
                 setAlert(true);
             })
             .catch(() => {
                 setErrorSave(true);
                 setAlert(true);
+            })
+            .finally(() => {
+                setLoading(false);
             });
     };
     return (
         <>
-            <div className={styles.setting}>
-                <div className={styles.part}>
+            <article className={styles.setting}>
+                <Text type={'h3'}>Загрузка нового шаблона</Text>
+                <section>
                     <Input
                         placeholder={'Введите название шаблона'}
                         value={templateName}
                         isError={errorName}
-                        disabled={!templateStructure}
+                        disabled={!templateStructure || isLoading}
                         onChange={onChangeName}
                     />
-                </div>
-                <div className={styles.part}>
+                </section>
+                <section>
                     <Input
                         type={'file'}
                         accept={'.json'}
                         onChange={onChangeTemplate}
                     />
-                    <Button colorBtn={'blue'} onClick={onCreateTemplate}>
-                        Загрузить документ
+                    <Button
+                        colorBtn={'blue'}
+                        disable={isLoading}
+                        onClick={onCreateTemplate}
+                    >
+                        {isLoading ? 'Загружается...' : 'Загрузить'}
                     </Button>
-                </div>
-                <div className={styles.line} />
-            </div>
+                </section>
+            </article>
             <Alert
                 visible={isAlert}
                 isError={isErrorSave}

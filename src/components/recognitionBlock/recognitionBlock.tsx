@@ -17,13 +17,15 @@ import { fetchTemplates } from '../../store/actionCreators/template';
 export const RecognitionBlock: React.FC = () => {
     const [filename, setFilename] = useState<string>();
     const [fileRec, setFileRec] = useState<File>();
-    const { document, loading } = useTypeSelector(documentSelector);
+    const { document, loading: loadingRec } = useTypeSelector(documentSelector);
     const { templates } = useTypeSelector(templateSelector);
     const [fileError, setFileError] = useState<boolean>(false);
     const [fileNameError, setFileNameError] = useState<boolean>(false);
     const [isAlert, setAlert] = useState<boolean>(false);
     const [isErrorSave, setErrorSave] = useState<boolean>(false);
     const [templateId, setTemplateId] = useState<string>('');
+    const [templateError, setTemplateError] = useState<boolean>(false);
+    const [loadingSave, setLoadingSave] = useState<boolean>(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -63,6 +65,9 @@ export const RecognitionBlock: React.FC = () => {
 
     const changeTemplate = (e: ChangeEvent<HTMLSelectElement>) => {
         const tempId = e.target.value;
+        if (templateError) {
+            setTemplateError(false);
+        }
         setTemplateId(tempId);
     };
 
@@ -78,11 +83,13 @@ export const RecognitionBlock: React.FC = () => {
             stateError = true;
         }
         if (!templateId) {
+            setTemplateError(true);
             stateError = true;
         }
         if (stateError) {
             return;
         }
+        setLoadingSave(true);
         if (filename && fileRec) {
             DocumentService.createDocument(
                 filename,
@@ -96,6 +103,9 @@ export const RecognitionBlock: React.FC = () => {
                 .catch(() => {
                     setAlert(true);
                     setErrorSave(true);
+                })
+                .finally(() => {
+                    setLoadingSave(false);
                 });
         }
     };
@@ -109,37 +119,42 @@ export const RecognitionBlock: React.FC = () => {
                         <Input
                             type={'file'}
                             accept={'.docx'}
+                            disabled={loadingSave || loadingRec}
                             onChange={changeFile}
                             isError={fileError}
                         />
                         <Input
                             placeholder={'Введите название файла'}
                             value={filename}
-                            disabled={!fileRec}
+                            disabled={!fileRec || loadingSave || loadingRec}
                             isError={fileNameError}
                             onChange={changeFilename}
                         />
                     </div>
                     <div className={styles.action}>
                         <SelectEntity
+                            isError={templateError}
+                            disabled={loadingSave || loadingRec}
                             data={templates}
                             onChange={changeTemplate}
                             defaultOption={'Выберите шаблон'}
                         />
                         <div className={styles.buttons}>
                             <Button
-                                disable={loading}
+                                disable={loadingSave || loadingRec}
                                 colorBtn={'blue'}
                                 onClick={onRecognitionDocument}
                             >
                                 Распознать файл
                             </Button>
                             <Button
-                                disable={loading}
+                                disable={loadingSave || loadingRec}
                                 colorBtn={'blue'}
                                 onClick={onCreateDocument}
                             >
-                                Сохранить файл
+                                {loadingSave
+                                    ? 'Файл сохраняется'
+                                    : 'Сохранить файл'}
                             </Button>
                         </div>
                     </div>
@@ -150,13 +165,13 @@ export const RecognitionBlock: React.FC = () => {
                     {document.structure && (
                         <LayoutTree data={document.structure} />
                     )}
-                    {!document.structure && !loading && (
+                    {!document.structure && !loadingRec && (
                         <Text type="description">
                             Введите название, выберите документ, чтобы получить
                             результат
                         </Text>
                     )}
-                    {loading && <PreloaderWithLayout />}
+                    {loadingRec && <PreloaderWithLayout />}
                     <Alert
                         visible={isAlert}
                         isError={isErrorSave}

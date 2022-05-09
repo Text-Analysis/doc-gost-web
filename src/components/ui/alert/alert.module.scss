@@ -1,7 +1,7 @@
 .alert {
   position: absolute;
-  opacity: 0;
-  pointer-events: none;
+  cursor: pointer;
+  pointer-events: auto;
   padding: 15px 20px;
   max-width: 250px;
   border-radius: 4px;
@@ -12,13 +12,6 @@
   bottom: 30px;
   right: 30px;
 }
-
-.alertActive {
-  opacity: 1;
-  cursor: pointer;
-  pointer-events: auto;
-}
-
 .error {
   color: var(--red);
   background-color: var(--redLight);

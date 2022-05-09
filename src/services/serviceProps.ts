@@ -5,7 +5,8 @@ export interface RequestEntities {
 }
 
 export interface IUpdateDocumentProps {
-    structure: IData[];
+    structure?: IData[];
+    keywords?: string[];
 }
 
 export interface ICreateDocumentProps {
