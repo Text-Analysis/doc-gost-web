@@ -10,12 +10,14 @@ export const Alert: React.FC<IAlert> = ({
     isError,
     ...props
 }) => {
+    if (!visible) {
+        return null;
+    }
     return (
         <div
             className={cn(className, styles.alert, {
                 [styles.success]: !isError,
                 [styles.error]: isError,
-                [styles.alertActive]: visible,
             })}
             {...props}
         >

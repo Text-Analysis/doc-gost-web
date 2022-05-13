@@ -1,5 +1,5 @@
 .input {
-  width: 430px;
+  width: 380px;
   box-shadow: 0 0 4px var(--black25);
   background: var(--white);
   border: 1px solid var(--greyDim);
@@ -14,6 +14,9 @@
   transition: border ease 0.2s;
   &:focus{
     border: 1px solid var(--blueThree);
+  }
+  &:disabled {
+    opacity: 0.5;
   }
 }
 
@@ -33,10 +36,13 @@ input[type='file'] {
   border-radius: 4px;
   padding: 8px 0 8px 15px;
   border: 1px solid var(--greyDim);
-  width:430px;
+  width: 380px;
   background: var(--white);
   box-shadow: 0 0 4px var(--black25);
   color: var(--black);
   cursor: pointer;
   transition: border ease 0.2s;
+  .textChoose {
+    color: var(--blackLight);
+  }
 }

@@ -1,11 +1,9 @@
 import { Dispatch } from 'redux';
-import {
-    DocumentAction,
-    DocumentActionTypes,
-    IData,
-} from '../../types/actions/document';
+import { DocumentAction, DocumentActionTypes } from '../types/document';
+
 import { changeTextSection } from '../../utils';
 import DocumentService from '../../services/documentService';
+import { IData } from '../types';
 
 export const fetchDocument = (id: string) => {
     return async (dispatch: Dispatch<DocumentAction>) => {
@@ -27,12 +25,15 @@ export const fetchDocument = (id: string) => {
     };
 };
 
-export const uploadDocument = (file: File) => {
+export const uploadDocument = (file: File, templateId: string) => {
     return async (dispatch: Dispatch<DocumentAction>) => {
         try {
             dispatch({ type: DocumentActionTypes.PARSE_DOCUMENT });
 
-            const docStructure = await DocumentService.parseDocument(file);
+            const docStructure = await DocumentService.parseDocument(
+                file,
+                templateId
+            );
 
             dispatch({
                 type: DocumentActionTypes.PARSE_DOCUMENT_SUCCESS,
@@ -41,26 +42,6 @@ export const uploadDocument = (file: File) => {
         } catch (error) {
             dispatch({
                 type: DocumentActionTypes.PARSE_DOCUMENT_ERROR,
-                payload: error,
-            });
-        }
-    };
-};
-
-export const fetchTemplate = (id: string) => {
-    return async (dispatch: Dispatch<DocumentAction>) => {
-        try {
-            dispatch({ type: DocumentActionTypes.FETCH_DOCUMENT });
-
-            const response = await DocumentService.getTemplate(id);
-
-            dispatch({
-                type: DocumentActionTypes.FETCH_DOCUMENT_SUCCESS,
-                payload: response.data,
-            });
-        } catch (error) {
-            dispatch({
-                type: DocumentActionTypes.FETCH_DOCUMENT_ERROR,
                 payload: error,
             });
         }
@@ -81,10 +62,37 @@ export const editSectionDocument = (
     };
 };
 
+export const setStructureDocument = (structure: IData[]) => {
+    return (dispatch: Dispatch<DocumentAction>) => {
+        dispatch({
+            type: DocumentActionTypes.SET_STRUCTURE_DOCUMENT,
+            payload: structure,
+        });
+    };
+};
+
 export const setZeroDocument = () => {
     return (dispatch: Dispatch<DocumentAction>) => {
         dispatch({
             type: DocumentActionTypes.SET_ZERO_DOCUMENT,
         });
+    };
+};
+
+export const fetchShortDocuments = () => {
+    return async (dispatch: Dispatch<DocumentAction>) => {
+        try {
+            dispatch({ type: DocumentActionTypes.FETCH_DOCUMENTS });
+            const response = await DocumentService.getDocuments();
+            dispatch({
+                type: DocumentActionTypes.FETCH_DOCUMENTS_SUCCESS,
+                payload: response.data.data,
+            });
+        } catch (error) {
+            dispatch({
+                type: DocumentActionTypes.FETCH_DOCUMENTS_ERROR,
+                payload: error,
+            });
+        }
     };
 };

@@ -2,11 +2,15 @@ import React from 'react';
 import styles from './menu.module.scss';
 import Action from './action';
 import { IMenu } from './menuProps';
+import Logo from '../../assets/logo.svg';
 
 export const Menu: React.FC<IMenu> = ({ activeSection, setSection }) => {
     return (
         <header className={styles.menu}>
-            <span className={styles.title}>SRS parser</span>
+            <section className={styles.titleBlock}>
+                <img alt={'logo'} src={Logo} />
+                <span className={styles.title}>TAS</span>
+            </section>
             <section className={styles.actions}>
                 <Action
                     active={activeSection === 0}

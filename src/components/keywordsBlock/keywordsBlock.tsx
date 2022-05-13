@@ -1,14 +1,14 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import styles from './keywordsBlock.module.scss';
 import DocumentService from '../../services/documentService';
-import { IKeywordsTypeOne, Mode } from '../../types/api';
 import { SettingsBlock } from './settingsBlock';
 import { ListPhrases } from './listPhrases';
-import { fetchDocumentsTitle } from '../../store/actionCreators/documents';
 import { useDispatch } from 'react-redux';
 import { PreloaderWithLayout } from '../preloader/preloaderWithLayout';
 import { Text } from '../ui';
 import { LayoutTypeTwo } from '../layouts';
+import { fetchShortDocuments } from '../../store/actionCreators/document';
+import { IKeywordsTypeOne, Mode } from '../../services/serviceProps';
 
 export const KeywordsBlock: React.FC = () => {
     const [documentId, setDocumentId] = useState<string>('');
@@ -16,11 +16,12 @@ export const KeywordsBlock: React.FC = () => {
     const [sections, setSections] = useState<string[]>([]);
     const [section, setSection] = useState<string>('');
     const [keywords, setKeywords] = useState<IKeywordsTypeOne | string[]>();
+    const [selectedKeywords, setSelectedKeywords] = useState<string[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchDocumentsTitle());
+        dispatch(fetchShortDocuments());
     }, []);
 
     useEffect(() => {
@@ -48,15 +49,33 @@ export const KeywordsBlock: React.FC = () => {
     const getKeywords = () => {
         if (documentId && mode) {
             setLoading(true);
-            DocumentService.getKeywords(documentId, mode, section)
+            DocumentService.generationKeywords(documentId, mode, section)
                 .then((response) => {
                     setKeywords(response.data);
-                    setLoading(false);
+                    return DocumentService.getKeywords(documentId);
                 })
-                .catch(() => {
+                .then((response) => {
+                    setSelectedKeywords(response.data);
+                })
+                .finally(() => {
                     setLoading(false);
                 });
         }
+    };
+    const toggleSelectedKeyword = (keyword: string) => {
+        const index = selectedKeywords.indexOf(keyword);
+        if (index !== -1) {
+            const filteredArray = selectedKeywords.filter(
+                (_, num) => num !== index
+            );
+            setSelectedKeywords(filteredArray);
+        } else {
+            setSelectedKeywords([...selectedKeywords, keyword]);
+        }
+    };
+
+    const saveKeywords = () => {
+        DocumentService.updateDocument(documentId, undefined, selectedKeywords);
     };
 
     const isKeywords = !loading && keywords?.length;
@@ -71,6 +90,7 @@ export const KeywordsBlock: React.FC = () => {
                 onChangeMode={onChangeMode}
                 onChangeSection={onChangeSection}
                 getKeywords={getKeywords}
+                saveKeywords={saveKeywords}
                 sections={sections}
                 loading={loading}
             />
@@ -84,7 +104,12 @@ export const KeywordsBlock: React.FC = () => {
                 <div className={styles.keywords}>
                     <Text type="h3">Список ключевых слов (словосочетаний)</Text>
                     <div className={styles.keywordsInner}>
-                        <ListPhrases keywords={keywords} mode={mode} />
+                        <ListPhrases
+                            keywords={keywords}
+                            mode={mode}
+                            selectedKeywords={selectedKeywords}
+                            toggleSelectedKeyword={toggleSelectedKeyword}
+                        />
                     </div>
                 </div>
             )}

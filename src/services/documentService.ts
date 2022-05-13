@@ -4,63 +4,77 @@ import {
     IKeywordsTypeOne,
     IUpdateDocumentProps,
     Mode,
-    RequestDocuments,
-} from '../types/api';
-import { IData, IDocumentFull } from '../types/actions/document';
+    RequestEntities,
+} from './serviceProps';
+import { IDocument } from '../store/types/document';
+import { IData } from '../store/types';
 
 class DocumentService extends Api {
     public getDocuments() {
-        return this.get<RequestDocuments>('/documents');
+        return this.get<RequestEntities>('/documents');
     }
 
     public getDocument(id: string) {
-        return this.get<IDocumentFull>(`/documents/${id}`);
+        return this.get<IDocument>(`/documents/${id}`);
     }
 
-    public updateDocument(id: string, obj: IData[]) {
-        return this.put<string, IUpdateDocumentProps>(`/documents/${id}`, {
-            structure: obj,
+    public updateDocument(
+        id: string,
+        structure?: IData[],
+        keywords?: string[]
+    ) {
+        return this.patch<string, IUpdateDocumentProps>(`/documents/${id}`, {
+            structure: structure,
+            keywords: keywords,
         });
     }
 
-    public createDocument(name: string, obj: IData[]) {
+    public createDocument(name: string, obj: IData[], templateId: string) {
         return this.post<string, ICreateDocumentProps>('/documents', {
             name: name,
             structure: obj,
+            templateId,
         });
     }
 
-    public getTemplate(id: string) {
-        return this.get<IDocumentFull>(`/templates/${id}`);
+    public deleteDocument(id: string) {
+        return this.delete(`/documents/${id}`);
     }
 
-    public parseDocument(file: File) {
+    public parseDocument(file: File, templateId: string) {
         const formData = new FormData();
         formData.set('file', file);
+        formData.set('template_id', templateId);
         return this.post<IData[], FormData>('/files', formData);
     }
 
     public getSections(id: string) {
-        return this.get<string[]>(`sections/${id}`);
+        return this.get<string[]>(`/documents/${id}/sections`);
     }
 
-    public getKeywords(id: string, mode: Mode, section = '') {
+    public getKeywords(id: string) {
+        return this.get<string[]>(`/documents/${id}/keywords`);
+    }
+
+    public generationKeywords(id: string, mode: Mode, section = '') {
         if (mode === 'combine' || mode === 'tf_idf') {
             if (section) {
                 return this.get<IKeywordsTypeOne>(
-                    `/documents/${id}/keywords?mode=${mode}&section_name=${section}`
+                    `/documents/${id}/keywords/generation?mode=${mode}&section_name=${section}`
                 );
             }
             return this.get<IKeywordsTypeOne>(
-                `/documents/${id}/keywords?mode=${mode}`
+                `/documents/${id}/keywords/generation?mode=${mode}`
             );
         }
         if (section) {
             return this.get<string[]>(
-                `/documents/${id}/keywords?mode=${mode}&section_name=${section}`
+                `/documents/${id}/keywords/generation?mode=${mode}&section_name=${section}`
             );
         }
-        return this.get<string[]>(`/documents/${id}/keywords?mode=${mode}`);
+        return this.get<string[]>(
+            `/documents/${id}/keywords/generation?mode=${mode}`
+        );
     }
 }
 

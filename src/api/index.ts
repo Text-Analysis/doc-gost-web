@@ -37,6 +37,12 @@ class Api {
     protected async put<T, V>(url: string, data: V): Promise<AxiosResponse<T>> {
         return this.instanceApi.put<T>(url, data);
     }
+    protected async patch<T, V>(
+        url: string,
+        data: V
+    ): Promise<AxiosResponse<T>> {
+        return this.instanceApi.patch<T>(url, data);
+    }
 }
 
 export default Api;

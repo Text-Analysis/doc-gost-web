@@ -1,9 +1,19 @@
-.action {
+.actions {
   display: flex;
-  &:nth-child(n + 2) {
-    margin-top: 20px;
-  }
-  button {
-    margin-left: 40px;
+  .action {
+    display: flex;
+    flex-direction: column;
+    &:nth-child(n + 2) {
+      margin-left: 20px;
+    }
+    & > input {
+      margin-top: 20px;
+    }
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      height: 100%;
+    }
   }
 }

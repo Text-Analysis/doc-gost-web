@@ -1,4 +1,4 @@
-import { IData } from '../../types/actions/document';
+import { IData } from '../../store/types';
 
 export interface ILayout {
     data: IData[];

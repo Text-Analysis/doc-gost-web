@@ -14,7 +14,7 @@ export const Input: React.FC<IInput> = ({ type, isError, ...props }) => {
         ) {
             return <span>Файл выбран</span>;
         }
-        return <span>Выберите файл</span>;
+        return <span className={styles.textChoose}>Выберите файл</span>;
     };
 
     const getInput = () => {
