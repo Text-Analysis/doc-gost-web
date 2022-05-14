@@ -30,11 +30,11 @@ export const CreateBlock: React.FC = () => {
 
     useEffect(() => {
         dispatch(fetchTemplates());
-        if (template.structure) {
+        setNoneFirst(true);
+        return () => {
             dispatch(setZeroTemplate());
             dispatch(setZeroDocument());
-        }
-        setNoneFirst(true);
+        };
     }, []);
 
     useEffect(() => {

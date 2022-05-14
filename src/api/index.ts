@@ -14,8 +14,11 @@ class Api {
         });
     }
 
-    protected async get<T>(url: string): Promise<AxiosResponse<T>> {
-        return this.instanceApi.get<T>(url);
+    protected async get<T>(
+        url: string,
+        config?: Object
+    ): Promise<AxiosResponse<T>> {
+        return this.instanceApi.get<T>(url, config);
     }
 
     protected async post<T, V>(

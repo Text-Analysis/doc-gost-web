@@ -16,7 +16,11 @@ import { PreloaderWithLayout } from '../preloader/preloaderWithLayout';
 
 export const EditBlock: React.FC = () => {
     const dispatch = useDispatch();
-    const { document, documents, loading } = useTypeSelector(documentSelector);
+    const {
+        document: documentEdit,
+        documents,
+        loading,
+    } = useTypeSelector(documentSelector);
     const [documentId, setDocumentId] = useState<string>('');
     const [isAlertUpdate, setAlertUpdate] = useState<boolean>(false);
     const [isAlertDelete, setAlertDelete] = useState<boolean>(false);
@@ -24,13 +28,13 @@ export const EditBlock: React.FC = () => {
     const [isDelete, setDelete] = useState<boolean>(false);
     const [isErrorUpdate, setErrorUpdate] = useState<boolean>(false);
     const [isErrorDelete, setErrorDelete] = useState<boolean>(false);
-    const [selError, setSelError] = useState<boolean>(false);
+    const [selectError, setSelectError] = useState<boolean>(false);
 
     useEffect(() => {
         dispatch(fetchShortDocuments());
-        if (document.structure) {
+        return () => {
             dispatch(setZeroDocument());
-        }
+        };
     }, []);
 
     useEffect(() => {
@@ -40,20 +44,20 @@ export const EditBlock: React.FC = () => {
     }, [documentId]);
 
     const onChangeDocumentId = (e: ChangeEvent<HTMLSelectElement>) => {
-        if (selError) {
-            setSelError(false);
+        if (selectError) {
+            setSelectError(false);
         }
         setDocumentId(e.target.value);
     };
 
-    const updateDoc = () => {
+    const onUpdateDocument = () => {
         if (!documentId) {
-            setSelError(true);
+            setSelectError(true);
             return;
         }
 
         setUpdate(true);
-        DocumentService.updateDocument(document.id, document.structure)
+        DocumentService.updateDocument(documentEdit.id, documentEdit.structure)
             .then(() => {
                 setErrorUpdate(false);
             })
@@ -66,9 +70,9 @@ export const EditBlock: React.FC = () => {
             });
     };
 
-    const deleteDoc = () => {
+    const onDeleteDocument = () => {
         if (!documentId) {
-            setSelError(true);
+            setSelectError(true);
             return;
         }
         setDelete(true);
@@ -86,6 +90,22 @@ export const EditBlock: React.FC = () => {
                 setDelete(false);
             });
     };
+
+    const onDownloadDocument = () => {
+        if (!documentId) {
+            setSelectError(true);
+            return;
+        }
+        DocumentService.downloadDocument(documentId).then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'file.docx');
+            document.body.appendChild(link);
+            link.click();
+        });
+    };
+
     return (
         <LayoutTypeOne
             sectionName={'Редактирование документа'}
@@ -95,30 +115,37 @@ export const EditBlock: React.FC = () => {
                         data={documents}
                         onChange={onChangeDocumentId}
                         disabled={isUpdate || isDelete}
-                        isError={selError}
+                        isError={selectError}
                     />
                     <Button
                         colorBtn={'blue'}
-                        onClick={updateDoc}
+                        onClick={onUpdateDocument}
                         disable={isUpdate || isDelete}
                     >
                         {isUpdate ? 'Сохраняется...' : 'Изменить'}
                     </Button>
                     <Button
                         colorBtn={'blue'}
-                        onClick={deleteDoc}
+                        onClick={onDeleteDocument}
                         disable={isUpdate || isDelete}
                     >
                         {isDelete ? 'Удаляется...' : 'Удалить'}
+                    </Button>
+                    <Button
+                        colorBtn={'blue'}
+                        onClick={onDownloadDocument}
+                        disable={isUpdate || isDelete}
+                    >
+                        Скачать в формате docx
                     </Button>
                 </div>
             }
             mainPart={
                 <>
-                    {document.structure && (
-                        <LayoutTree data={document.structure} />
+                    {documentEdit.structure && (
+                        <LayoutTree data={documentEdit.structure} />
                     )}
-                    {!document.structure && !loading && (
+                    {!documentEdit.structure && !loading && (
                         <Text type="description">
                             Выберите документ, чтобы получить информацию
                         </Text>

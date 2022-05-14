@@ -55,7 +55,12 @@ export const KeywordsBlock: React.FC = () => {
                     return DocumentService.getKeywords(documentId);
                 })
                 .then((response) => {
-                    setSelectedKeywords(response.data);
+                    const result = response.data;
+                    if (!result) {
+                        setSelectedKeywords([]);
+                    } else {
+                        setSelectedKeywords(result);
+                    }
                 })
                 .finally(() => {
                     setLoading(false);

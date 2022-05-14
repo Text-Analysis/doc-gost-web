@@ -29,8 +29,10 @@ export const RecognitionBlock: React.FC = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(setZeroDocument());
         dispatch(fetchTemplates());
+        return () => {
+            dispatch(setZeroDocument());
+        };
     }, []);
 
     const changeFile = (event: ChangeEvent<HTMLInputElement>) => {
