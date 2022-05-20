@@ -12,8 +12,11 @@
 }
 
 
-.keywordsBlock {
+.keywordsBlockOverflow {
   overflow-y: scroll;
+}
+
+.keywordsBlock {
   h1 {
     font-size: 30px;
     font-weight: bold;

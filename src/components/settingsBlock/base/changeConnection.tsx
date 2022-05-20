@@ -3,10 +3,13 @@ import styles from '../settingsBlock.module.scss';
 import { Button, Input, Text } from '../../ui';
 import BaseService from '../../../services/baseService';
 import { fixedEncodeURIComponent } from '../../../utils';
+import { useDispatch } from 'react-redux';
+import { addNotification } from '../../../store/actionCreators/notification';
 
 export const ChangeConnection: React.FC = () => {
     const [uri, setUri] = useState<string>('');
     const [errorURI, setErrorURI] = useState<boolean>(false);
+    const dispatch = useDispatch();
 
     const onChangeUri = (event: ChangeEvent<HTMLInputElement>) => {
         setErrorURI(false);
@@ -19,7 +22,17 @@ export const ChangeConnection: React.FC = () => {
             return;
         }
         const encodedURI = fixedEncodeURIComponent(uri);
-        BaseService.changeConnection(encodedURI);
+        BaseService.changeConnection(encodedURI)
+            .then(() =>
+                dispatch(
+                    addNotification('success', 'Подключение к БД изменено')
+                )
+            )
+            .catch(() =>
+                dispatch(
+                    addNotification('error', 'Произошла ошибка при смене БД')
+                )
+            );
     };
 
     return (

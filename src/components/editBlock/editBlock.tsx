@@ -143,7 +143,7 @@ export const EditBlock: React.FC = () => {
                         onClick={onDownloadDocument}
                         disable={isUpdate || isDelete}
                     >
-                        Скачать в формате docx
+                        Скачать в Word
                     </Button>
                 </div>
             }

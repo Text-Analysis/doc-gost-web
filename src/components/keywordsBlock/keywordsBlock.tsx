@@ -9,6 +9,8 @@ import { Text } from '../ui';
 import { LayoutTypeTwo } from '../layouts';
 import { fetchShortDocuments } from '../../store/actionCreators/document';
 import { IKeywordsTypeOne, Mode } from '../../services/serviceProps';
+import cn from 'classnames';
+import { addNotification } from '../../store/actionCreators/notification';
 
 export const KeywordsBlock: React.FC = () => {
     const [documentId, setDocumentId] = useState<string>('');
@@ -80,7 +82,18 @@ export const KeywordsBlock: React.FC = () => {
     };
 
     const saveKeywords = () => {
-        DocumentService.updateDocument(documentId, undefined, selectedKeywords);
+        DocumentService.updateDocument(documentId, undefined, selectedKeywords)
+            .then(() =>
+                dispatch(addNotification('success', 'Ключевые слова сохранены'))
+            )
+            .catch(() =>
+                dispatch(
+                    addNotification(
+                        'error',
+                        'Произошла ошибка при сохранении слов'
+                    )
+                )
+            );
     };
 
     const isKeywords = !loading && keywords?.length;
@@ -88,7 +101,9 @@ export const KeywordsBlock: React.FC = () => {
     return (
         <LayoutTypeTwo
             sectionName={'Ключевые слова'}
-            className={styles.keywordsBlock}
+            className={cn(styles.keywordsBlock, {
+                [styles.keywordsBlockOverflow]: keywords,
+            })}
         >
             <SettingsBlock
                 onChangeDocumentId={onChangeDocumentId}
