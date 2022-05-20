@@ -17,3 +17,9 @@ export const changeTextSection = (
     });
     return structure;
 };
+
+export const fixedEncodeURIComponent = (str: string) => {
+    return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
+        return '%' + c.charCodeAt(0).toString(16);
+    });
+};

@@ -1,16 +1,15 @@
 import React, { ChangeEvent, useState } from 'react';
 import styles from '../settingsBlock.module.scss';
-import { Alert, Button, Input, Text } from '../../ui';
+import { Button, Input, Text } from '../../ui';
 import TemplateService from '../../../services/templateService';
 import { useDispatch } from 'react-redux';
 import { fetchTemplates } from '../../../store/actionCreators/template';
+import { addNotification } from '../../../store/actionCreators/notification';
 
 export const Download: React.FC = () => {
     const [templateName, setTemplateName] = useState<string>();
     const [templateStructure, setTemplateStructure] = useState();
     const [errorName, setErrorName] = useState<boolean>(false);
-    const [isAlert, setAlert] = useState<boolean>(false);
-    const [isErrorSave, setErrorSave] = useState<boolean>(false);
     const [isLoading, setLoading] = useState<boolean>(false);
     const dispatch = useDispatch();
 
@@ -50,54 +49,43 @@ export const Download: React.FC = () => {
         TemplateService.createTemplate(templateName, templateStructure)
             .then(() => {
                 dispatch(fetchTemplates());
-                setErrorSave(false);
-                setAlert(true);
+                dispatch(addNotification('success', 'Шаблон успешно загружен'));
             })
             .catch(() => {
-                setErrorSave(true);
-                setAlert(true);
+                dispatch(
+                    addNotification('error', 'Ошибка при загрузке шаблона')
+                );
             })
             .finally(() => {
                 setLoading(false);
             });
     };
     return (
-        <>
-            <article className={styles.setting}>
-                <Text type={'h3'}>Загрузка нового шаблона</Text>
-                <section>
-                    <Input
-                        placeholder={'Введите название шаблона'}
-                        value={templateName}
-                        isError={errorName}
-                        disabled={!templateStructure || isLoading}
-                        onChange={onChangeName}
-                    />
-                </section>
-                <section>
-                    <Input
-                        type={'file'}
-                        accept={'.json'}
-                        onChange={onChangeTemplate}
-                    />
-                    <Button
-                        colorBtn={'blue'}
-                        disable={isLoading}
-                        onClick={onCreateTemplate}
-                    >
-                        {isLoading ? 'Загружается...' : 'Загрузить'}
-                    </Button>
-                </section>
-            </article>
-            <Alert
-                visible={isAlert}
-                isError={isErrorSave}
-                onClick={() => setAlert(false)}
-            >
-                {isErrorSave
-                    ? 'Произошла ошибка при сохранении шаблона (проверьте структуру)'
-                    : 'Шаблон успешно сохранён'}
-            </Alert>
-        </>
+        <article className={styles.setting}>
+            <Text type={'h3'}>Загрузка нового шаблона</Text>
+            <section>
+                <Input
+                    placeholder={'Введите название шаблона'}
+                    value={templateName}
+                    isError={errorName}
+                    disabled={!templateStructure || isLoading}
+                    onChange={onChangeName}
+                />
+            </section>
+            <section>
+                <Input
+                    type={'file'}
+                    accept={'.json'}
+                    onChange={onChangeTemplate}
+                />
+                <Button
+                    colorBtn={'blue'}
+                    disable={isLoading}
+                    onClick={onCreateTemplate}
+                >
+                    {isLoading ? 'Загружается...' : 'Загрузить'}
+                </Button>
+            </section>
+        </article>
     );
 };

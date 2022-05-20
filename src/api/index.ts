@@ -37,7 +37,10 @@ class Api {
         return this.instanceApi.delete(url);
     }
 
-    protected async put<T, V>(url: string, data: V): Promise<AxiosResponse<T>> {
+    protected async put<T, V>(
+        url: string,
+        data?: V
+    ): Promise<AxiosResponse<T>> {
         return this.instanceApi.put<T>(url, data);
     }
     protected async patch<T, V>(

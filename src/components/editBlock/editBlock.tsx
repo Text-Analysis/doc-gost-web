@@ -3,7 +3,7 @@ import { useTypeSelector } from '../../hooks/useTypeSelector';
 import { useDispatch } from 'react-redux';
 import styles from './editBlock.module.scss';
 import { LayoutTree } from '../tree/tree';
-import { Button, Alert, SelectEntity, Text } from '../ui';
+import { Button, SelectEntity, Text } from '../ui';
 import {
     fetchDocument,
     fetchShortDocuments,
@@ -13,6 +13,7 @@ import { LayoutTypeOne } from '../layouts';
 import DocumentService from '../../services/documentService';
 import { documentSelector } from '../../store/selectors';
 import { PreloaderWithLayout } from '../preloader/preloaderWithLayout';
+import { addNotification } from '../../store/actionCreators/notification';
 
 export const EditBlock: React.FC = () => {
     const dispatch = useDispatch();
@@ -22,12 +23,8 @@ export const EditBlock: React.FC = () => {
         loading,
     } = useTypeSelector(documentSelector);
     const [documentId, setDocumentId] = useState<string>('');
-    const [isAlertUpdate, setAlertUpdate] = useState<boolean>(false);
-    const [isAlertDelete, setAlertDelete] = useState<boolean>(false);
     const [isUpdate, setUpdate] = useState<boolean>(false);
     const [isDelete, setDelete] = useState<boolean>(false);
-    const [isErrorUpdate, setErrorUpdate] = useState<boolean>(false);
-    const [isErrorDelete, setErrorDelete] = useState<boolean>(false);
     const [selectError, setSelectError] = useState<boolean>(false);
 
     useEffect(() => {
@@ -59,13 +56,19 @@ export const EditBlock: React.FC = () => {
         setUpdate(true);
         DocumentService.updateDocument(documentEdit.id, documentEdit.structure)
             .then(() => {
-                setErrorUpdate(false);
+                dispatch(
+                    addNotification('success', 'Документ успешно обновлён')
+                );
             })
             .catch(() => {
-                setErrorUpdate(true);
+                dispatch(
+                    addNotification(
+                        'error',
+                        'При обновлении документа произошла ошибка'
+                    )
+                );
             })
             .finally(() => {
-                setAlertUpdate(true);
                 setUpdate(false);
             });
     };
@@ -80,13 +83,17 @@ export const EditBlock: React.FC = () => {
             .then(() => {
                 dispatch(setZeroDocument());
                 dispatch(fetchShortDocuments());
-                setErrorDelete(false);
+                dispatch(addNotification('success', 'Документ успешно удалён'));
             })
             .catch(() => {
-                setErrorDelete(true);
+                dispatch(
+                    addNotification(
+                        'error',
+                        'Произошла ошибка при удалении документа'
+                    )
+                );
             })
             .finally(() => {
-                setAlertDelete(true);
                 setDelete(false);
             });
     };
@@ -151,24 +158,6 @@ export const EditBlock: React.FC = () => {
                         </Text>
                     )}
                     {loading && <PreloaderWithLayout />}
-                    <Alert
-                        isError={isErrorUpdate}
-                        visible={isAlertUpdate}
-                        onClick={() => setAlertUpdate(false)}
-                    >
-                        {isErrorUpdate
-                            ? 'Произошла ошибка при обновлении файла'
-                            : 'Файл успешно обновлён'}
-                    </Alert>
-                    <Alert
-                        isError={isErrorDelete}
-                        visible={isAlertDelete}
-                        onClick={() => setAlertDelete(false)}
-                    >
-                        {isErrorDelete
-                            ? 'Произошла ошибка при удалении файла'
-                            : 'Файл успешно удалён'}
-                    </Alert>
                 </>
             }
         />
