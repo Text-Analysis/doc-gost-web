@@ -5,6 +5,7 @@ import BaseService from '../../../services/baseService';
 import { fixedEncodeURIComponent } from '../../../utils';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../../../store/actionCreators/notification';
+import { fetchTemplates } from '../../../store/actionCreators/template';
 
 export const ChangeConnection: React.FC = () => {
     const [uri, setUri] = useState<string>('');
@@ -23,11 +24,12 @@ export const ChangeConnection: React.FC = () => {
         }
         const encodedURI = fixedEncodeURIComponent(uri);
         BaseService.changeConnection(encodedURI)
-            .then(() =>
+            .then(() => {
                 dispatch(
                     addNotification('success', 'Подключение к БД изменено')
-                )
-            )
+                );
+                dispatch(fetchTemplates());
+            })
             .catch(() =>
                 dispatch(
                     addNotification('error', 'Произошла ошибка при смене БД')

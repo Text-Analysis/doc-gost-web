@@ -60,7 +60,7 @@ export const AboutBlock: React.FC = () => {
                     был проведён эксперимент с построением графиков социальной
                     динамики профиля в социальной сети Instagram<sup>1</sup>,{' '}
                     результаты которого представлены{' '}
-                    <a href="https://github.com/Text-Analysis/posts-scraper">
+                    <a href="https://github.com/Text-Analysis/posts-scraper/blob/master/examples/social_dynamic.ipynb">
                         на странице проекта в GitHub.
                     </a>
                 </Text>

@@ -39,7 +39,7 @@ export const Delete: React.FC = () => {
             .catch(() => {
                 dispatch(
                     addNotification(
-                        'success',
+                        'error',
                         'Произошла ошибка при удалении шаблона'
                     )
                 );

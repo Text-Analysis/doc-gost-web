@@ -173,8 +173,9 @@ export const RecognitionBlock: React.FC = () => {
                     )}
                     {!document.structure && !loadingRec && (
                         <Text type="description">
-                            Введите название, выберите документ, чтобы получить
-                            результат
+                            Выберите файл, шаблон из списка, по которому
+                            распознается документ. Далее введите название, если
+                            необходимо, измените содержимое, и сохраните в БД.
                         </Text>
                     )}
                     {loadingRec && <PreloaderWithLayout />}

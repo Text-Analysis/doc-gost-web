@@ -13,11 +13,7 @@
   .titleBlock {
     display: flex;
     align-items: center;
-    padding-left: 47px;
-    @media screen and (max-width: 1439px) {
-      justify-content: center;
-      padding-left: 0;
-    }
+    justify-content: center;
     img {
       width: 70px;
       margin-right: 25px;
@@ -47,7 +43,7 @@
       height: 58px;
       cursor: pointer;
       transition: all ease 0.4s;
-      padding-left: 43px;
+      padding-left: 20px;
       @media screen and (max-width: 1439px) {
         padding-left: 0;
         justify-content: center;

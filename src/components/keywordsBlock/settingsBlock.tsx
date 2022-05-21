@@ -29,7 +29,7 @@ export const SettingsBlock: React.FC<ISettingsBlock> = ({
                             disabled={loading}
                             className={styles.select}
                             onChange={onChangeDocumentId}
-                            defaultOption={'Шаблон не выбран'}
+                            defaultOption={'Документ не выбран'}
                         />
                     </div>
                     <div className={styles.setting}>

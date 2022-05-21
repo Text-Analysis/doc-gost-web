@@ -154,7 +154,10 @@ export const EditBlock: React.FC = () => {
                     )}
                     {!documentEdit.structure && !loading && (
                         <Text type="description">
-                            Выберите документ, чтобы получить информацию
+                            Необходимо выбрать документ из текущего списка,
+                            чтобы отредактировать содержимое абзацев или удалить
+                            файл. «Скачать в Word» позволяет получить документ в
+                            формате «.docx».
                         </Text>
                     )}
                     {loading && <PreloaderWithLayout />}

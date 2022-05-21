@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { LayoutTypeOne } from '../layouts';
 import styles from './createBlock.module.scss';
-import { Input, Button, SelectEntity } from '../ui';
+import { Input, Button, SelectEntity, Text } from '../ui';
 import { useDispatch } from 'react-redux';
 import { useTypeSelector } from '../../hooks/useTypeSelector';
 import { LayoutTree } from '../tree/tree';
@@ -102,6 +102,13 @@ export const CreateBlock: React.FC = () => {
             mainPart={
                 <>
                     {documentFetch && <LayoutTree data={document.structure} />}
+                    {!document.structure && !loading && (
+                        <Text type="description">
+                            Для создания нового файла выберите шаблон из списка
+                            и заполните структуру. Далее введите название и
+                            нажмите кнопку «Сохранить документ»
+                        </Text>
+                    )}
                     {loading && <PreloaderWithLayout />}
                 </>
             }
