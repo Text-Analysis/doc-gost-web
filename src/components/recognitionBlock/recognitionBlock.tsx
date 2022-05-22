@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { LayoutTypeOne } from '../layouts';
-import { Alert, Button, Input, SelectEntity, Text } from '../ui';
+import { Button, Input, SelectEntity, Text } from '../ui';
 import { LayoutTree } from '../tree/tree';
 import styles from './recognitionBlock.module.scss';
 import { useTypeSelector } from '../../hooks/useTypeSelector';
@@ -13,6 +13,7 @@ import {
 import DocumentService from '../../services/documentService';
 import { PreloaderWithLayout } from '../preloader/preloaderWithLayout';
 import { fetchTemplates } from '../../store/actionCreators/template';
+import { addNotification } from '../../store/actionCreators/notification';
 
 export const RecognitionBlock: React.FC = () => {
     const [filename, setFilename] = useState<string>();
@@ -21,16 +22,16 @@ export const RecognitionBlock: React.FC = () => {
     const { templates } = useTypeSelector(templateSelector);
     const [fileError, setFileError] = useState<boolean>(false);
     const [fileNameError, setFileNameError] = useState<boolean>(false);
-    const [isAlert, setAlert] = useState<boolean>(false);
-    const [isErrorSave, setErrorSave] = useState<boolean>(false);
     const [templateId, setTemplateId] = useState<string>('');
     const [templateError, setTemplateError] = useState<boolean>(false);
     const [loadingSave, setLoadingSave] = useState<boolean>(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(setZeroDocument());
         dispatch(fetchTemplates());
+        return () => {
+            dispatch(setZeroDocument());
+        };
     }, []);
 
     const changeFile = (event: ChangeEvent<HTMLInputElement>) => {
@@ -97,12 +98,17 @@ export const RecognitionBlock: React.FC = () => {
                 templateId
             )
                 .then(() => {
-                    setAlert(true);
-                    setErrorSave(false);
+                    dispatch(
+                        addNotification('success', 'Документ успешно сохранён')
+                    );
                 })
                 .catch(() => {
-                    setAlert(true);
-                    setErrorSave(true);
+                    dispatch(
+                        addNotification(
+                            'error',
+                            'Произошла ошибка при сохранении'
+                        )
+                    );
                 })
                 .finally(() => {
                     setLoadingSave(false);
@@ -167,20 +173,12 @@ export const RecognitionBlock: React.FC = () => {
                     )}
                     {!document.structure && !loadingRec && (
                         <Text type="description">
-                            Введите название, выберите документ, чтобы получить
-                            результат
+                            Выберите файл, шаблон из списка, по которому
+                            распознается документ. Далее введите название, если
+                            необходимо, измените содержимое, и сохраните в БД.
                         </Text>
                     )}
                     {loadingRec && <PreloaderWithLayout />}
-                    <Alert
-                        visible={isAlert}
-                        isError={isErrorSave}
-                        onClick={() => setAlert(false)}
-                    >
-                        {isErrorSave
-                            ? 'Произошла ошибка при сохранении файла'
-                            : 'Файл успешно сохранён'}
-                    </Alert>
                 </>
             }
         />

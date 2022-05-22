@@ -1,18 +1,17 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import styles from '../settingsBlock.module.scss';
-import { Alert, Button, SelectEntity, Text } from '../../ui';
+import { Button, SelectEntity, Text } from '../../ui';
 import { useTypeSelector } from '../../../hooks/useTypeSelector';
 import { templateSelector } from '../../../store/selectors';
 import { fetchTemplates } from '../../../store/actionCreators/template';
 import { useDispatch } from 'react-redux';
 import templateService from '../../../services/templateService';
+import { addNotification } from '../../../store/actionCreators/notification';
 
 export const Delete: React.FC = () => {
     const { templates } = useTypeSelector(templateSelector);
     const [templateId, setTemplateId] = useState<string>();
     const [isErrorTemplate, setErrorTemplate] = useState<boolean>(false);
-    const [isErrorSave, setErrorSave] = useState<boolean>(false);
-    const [isAlert, setAlert] = useState<boolean>(false);
     const [isLoading, setLoading] = useState<boolean>(false);
     const dispatch = useDispatch();
 
@@ -35,47 +34,39 @@ export const Delete: React.FC = () => {
             .deleteTemplate(templateId)
             .then(() => {
                 dispatch(fetchTemplates());
-                setErrorSave(false);
-                setAlert(true);
+                dispatch(addNotification('success', 'Шаблон удалён'));
             })
             .catch(() => {
-                setErrorSave(true);
-                setAlert(true);
+                dispatch(
+                    addNotification(
+                        'error',
+                        'Произошла ошибка при удалении шаблона'
+                    )
+                );
             })
             .finally(() => {
                 setLoading(false);
             });
     };
     return (
-        <>
-            <article className={styles.setting}>
-                <Text type={'h3'}>Удаление шаблона</Text>
-                <section>
-                    <SelectEntity
-                        data={templates}
-                        disabled={isLoading}
-                        isError={isErrorTemplate}
-                        onChange={changeTemplate}
-                        defaultOption={'Выберите шаблон'}
-                    />
-                    <Button
-                        colorBtn={'blue'}
-                        disable={isLoading}
-                        onClick={onDeleteTemplate}
-                    >
-                        {isLoading ? 'Удаляется...' : 'Удалить'}
-                    </Button>
-                </section>
-            </article>
-            <Alert
-                visible={isAlert}
-                isError={isErrorSave}
-                onClick={() => setAlert(false)}
-            >
-                {isErrorSave
-                    ? 'Произошла ошибка при удалении шаблона'
-                    : 'Шаблон успешно удален'}
-            </Alert>
-        </>
+        <article className={styles.setting}>
+            <Text type={'h3'}>Удаление шаблона</Text>
+            <section>
+                <SelectEntity
+                    data={templates}
+                    disabled={isLoading}
+                    isError={isErrorTemplate}
+                    onChange={changeTemplate}
+                    defaultOption={'Выберите шаблон'}
+                />
+                <Button
+                    colorBtn={'blue'}
+                    disable={isLoading}
+                    onClick={onDeleteTemplate}
+                >
+                    {isLoading ? 'Удаляется...' : 'Удалить'}
+                </Button>
+            </section>
+        </article>
     );
 };

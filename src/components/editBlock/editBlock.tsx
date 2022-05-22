@@ -3,7 +3,7 @@ import { useTypeSelector } from '../../hooks/useTypeSelector';
 import { useDispatch } from 'react-redux';
 import styles from './editBlock.module.scss';
 import { LayoutTree } from '../tree/tree';
-import { Button, Alert, SelectEntity, Text } from '../ui';
+import { Button, SelectEntity, Text } from '../ui';
 import {
     fetchDocument,
     fetchShortDocuments,
@@ -13,24 +13,25 @@ import { LayoutTypeOne } from '../layouts';
 import DocumentService from '../../services/documentService';
 import { documentSelector } from '../../store/selectors';
 import { PreloaderWithLayout } from '../preloader/preloaderWithLayout';
+import { addNotification } from '../../store/actionCreators/notification';
 
 export const EditBlock: React.FC = () => {
     const dispatch = useDispatch();
-    const { document, documents, loading } = useTypeSelector(documentSelector);
+    const {
+        document: documentEdit,
+        documents,
+        loading,
+    } = useTypeSelector(documentSelector);
     const [documentId, setDocumentId] = useState<string>('');
-    const [isAlertUpdate, setAlertUpdate] = useState<boolean>(false);
-    const [isAlertDelete, setAlertDelete] = useState<boolean>(false);
     const [isUpdate, setUpdate] = useState<boolean>(false);
     const [isDelete, setDelete] = useState<boolean>(false);
-    const [isErrorUpdate, setErrorUpdate] = useState<boolean>(false);
-    const [isErrorDelete, setErrorDelete] = useState<boolean>(false);
-    const [selError, setSelError] = useState<boolean>(false);
+    const [selectError, setSelectError] = useState<boolean>(false);
 
     useEffect(() => {
         dispatch(fetchShortDocuments());
-        if (document.structure) {
+        return () => {
             dispatch(setZeroDocument());
-        }
+        };
     }, []);
 
     useEffect(() => {
@@ -40,35 +41,41 @@ export const EditBlock: React.FC = () => {
     }, [documentId]);
 
     const onChangeDocumentId = (e: ChangeEvent<HTMLSelectElement>) => {
-        if (selError) {
-            setSelError(false);
+        if (selectError) {
+            setSelectError(false);
         }
         setDocumentId(e.target.value);
     };
 
-    const updateDoc = () => {
+    const onUpdateDocument = () => {
         if (!documentId) {
-            setSelError(true);
+            setSelectError(true);
             return;
         }
 
         setUpdate(true);
-        DocumentService.updateDocument(document.id, document.structure)
+        DocumentService.updateDocument(documentEdit.id, documentEdit.structure)
             .then(() => {
-                setErrorUpdate(false);
+                dispatch(
+                    addNotification('success', 'Документ успешно обновлён')
+                );
             })
             .catch(() => {
-                setErrorUpdate(true);
+                dispatch(
+                    addNotification(
+                        'error',
+                        'При обновлении документа произошла ошибка'
+                    )
+                );
             })
             .finally(() => {
-                setAlertUpdate(true);
                 setUpdate(false);
             });
     };
 
-    const deleteDoc = () => {
+    const onDeleteDocument = () => {
         if (!documentId) {
-            setSelError(true);
+            setSelectError(true);
             return;
         }
         setDelete(true);
@@ -76,16 +83,36 @@ export const EditBlock: React.FC = () => {
             .then(() => {
                 dispatch(setZeroDocument());
                 dispatch(fetchShortDocuments());
-                setErrorDelete(false);
+                dispatch(addNotification('success', 'Документ успешно удалён'));
             })
             .catch(() => {
-                setErrorDelete(true);
+                dispatch(
+                    addNotification(
+                        'error',
+                        'Произошла ошибка при удалении документа'
+                    )
+                );
             })
             .finally(() => {
-                setAlertDelete(true);
                 setDelete(false);
             });
     };
+
+    const onDownloadDocument = () => {
+        if (!documentId) {
+            setSelectError(true);
+            return;
+        }
+        DocumentService.downloadDocument(documentId).then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'file.docx');
+            document.body.appendChild(link);
+            link.click();
+        });
+    };
+
     return (
         <LayoutTypeOne
             sectionName={'Редактирование документа'}
@@ -95,53 +122,45 @@ export const EditBlock: React.FC = () => {
                         data={documents}
                         onChange={onChangeDocumentId}
                         disabled={isUpdate || isDelete}
-                        isError={selError}
+                        isError={selectError}
                     />
                     <Button
                         colorBtn={'blue'}
-                        onClick={updateDoc}
+                        onClick={onUpdateDocument}
                         disable={isUpdate || isDelete}
                     >
                         {isUpdate ? 'Сохраняется...' : 'Изменить'}
                     </Button>
                     <Button
                         colorBtn={'blue'}
-                        onClick={deleteDoc}
+                        onClick={onDeleteDocument}
                         disable={isUpdate || isDelete}
                     >
                         {isDelete ? 'Удаляется...' : 'Удалить'}
+                    </Button>
+                    <Button
+                        colorBtn={'blue'}
+                        onClick={onDownloadDocument}
+                        disable={isUpdate || isDelete}
+                    >
+                        Скачать в Word
                     </Button>
                 </div>
             }
             mainPart={
                 <>
-                    {document.structure && (
-                        <LayoutTree data={document.structure} />
+                    {documentEdit.structure && (
+                        <LayoutTree data={documentEdit.structure} />
                     )}
-                    {!document.structure && !loading && (
+                    {!documentEdit.structure && !loading && (
                         <Text type="description">
-                            Выберите документ, чтобы получить информацию
+                            Необходимо выбрать документ из текущего списка,
+                            чтобы отредактировать содержимое абзацев или удалить
+                            файл. «Скачать в Word» позволяет получить документ в
+                            формате «.docx».
                         </Text>
                     )}
                     {loading && <PreloaderWithLayout />}
-                    <Alert
-                        isError={isErrorUpdate}
-                        visible={isAlertUpdate}
-                        onClick={() => setAlertUpdate(false)}
-                    >
-                        {isErrorUpdate
-                            ? 'Произошла ошибка при обновлении файла'
-                            : 'Файл успешно обновлён'}
-                    </Alert>
-                    <Alert
-                        isError={isErrorDelete}
-                        visible={isAlertDelete}
-                        onClick={() => setAlertDelete(false)}
-                    >
-                        {isErrorDelete
-                            ? 'Произошла ошибка при удалении файла'
-                            : 'Файл успешно удалён'}
-                    </Alert>
                 </>
             }
         />

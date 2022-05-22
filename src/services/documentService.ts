@@ -76,6 +76,11 @@ class DocumentService extends Api {
             `/documents/${id}/keywords/generation?mode=${mode}`
         );
     }
+    public downloadDocument(id: string) {
+        return this.get<BlobPart>(`/documents/${id}/download`, {
+            responseType: 'blob',
+        });
+    }
 }
 
 export default new DocumentService();

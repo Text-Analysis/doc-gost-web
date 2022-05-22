@@ -1,15 +1,13 @@
 import React from 'react';
 import styles from '../settingsBlock.module.scss';
 import { Text } from '../../ui';
-import { Download } from './download';
-import { Delete } from './delete';
+import { ChangeConnection } from './changeConnection';
 
-export const Template: React.FC = () => {
+export const Base: React.FC = () => {
     return (
         <section className={styles.section}>
-            <Text type="h2">Настройки шаблона</Text>
-            <Download />
-            <Delete />
+            <Text type="h2">Базовые настройки</Text>
+            <ChangeConnection />
             <div className={styles.line} />
         </section>
     );

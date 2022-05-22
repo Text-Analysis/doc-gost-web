@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { LayoutTypeOne } from '../layouts';
 import styles from './createBlock.module.scss';
-import { Input, Button, Alert, SelectEntity } from '../ui';
+import { Input, Button, SelectEntity, Text } from '../ui';
 import { useDispatch } from 'react-redux';
 import { useTypeSelector } from '../../hooks/useTypeSelector';
 import { LayoutTree } from '../tree/tree';
@@ -17,6 +17,7 @@ import {
     setStructureDocument,
     setZeroDocument,
 } from '../../store/actionCreators/document';
+import { addNotification } from '../../store/actionCreators/notification';
 
 export const CreateBlock: React.FC = () => {
     const dispatch = useDispatch();
@@ -24,17 +25,15 @@ export const CreateBlock: React.FC = () => {
     const { document } = useTypeSelector(documentSelector);
     const [nameFile, setNameFile] = useState<string>();
     const [isErrorName, setErrorName] = useState<boolean>(false);
-    const [isAlert, setAlert] = useState<boolean>(false);
-    const [isErrorSave, setErrorSave] = useState<boolean>(false);
     const [isNoneFirst, setNoneFirst] = useState<boolean>(false);
 
     useEffect(() => {
         dispatch(fetchTemplates());
-        if (template.structure) {
+        setNoneFirst(true);
+        return () => {
             dispatch(setZeroTemplate());
             dispatch(setZeroDocument());
-        }
-        setNoneFirst(true);
+        };
     }, []);
 
     useEffect(() => {
@@ -65,12 +64,15 @@ export const CreateBlock: React.FC = () => {
             template.id
         )
             .then(() => {
-                setAlert(true);
-                setErrorSave(false);
+                dispatch(addNotification('success', 'Файл успешно сохранён'));
             })
             .catch(() => {
-                setAlert(true);
-                setErrorSave(true);
+                dispatch(
+                    addNotification(
+                        'error',
+                        'Произошла ошибка при сохранении файла'
+                    )
+                );
             });
     };
 
@@ -100,16 +102,14 @@ export const CreateBlock: React.FC = () => {
             mainPart={
                 <>
                     {documentFetch && <LayoutTree data={document.structure} />}
+                    {!document.structure && !loading && (
+                        <Text type="description">
+                            Для создания нового файла выберите шаблон из списка
+                            и заполните структуру. Далее введите название и
+                            нажмите кнопку «Сохранить документ»
+                        </Text>
+                    )}
                     {loading && <PreloaderWithLayout />}
-                    <Alert
-                        visible={isAlert}
-                        isError={isErrorSave}
-                        onClick={() => setAlert(false)}
-                    >
-                        {isErrorSave
-                            ? 'Произошла ошибка при сохранении файла'
-                            : 'Файл успешно сохранён'}
-                    </Alert>
                 </>
             }
         />

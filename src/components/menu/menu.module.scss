@@ -6,19 +6,30 @@
   background: var(--blueOne);
   padding: 30px 0;
   min-height: 677px;
+  transition: all 0.2s ease-in;
+  @media screen and (max-width: 1439px) {
+    width: 7vw;
+  }
   .titleBlock {
     display: flex;
     align-items: center;
-    padding-left: 47px;
+    justify-content: center;
     img {
       width: 70px;
       margin-right: 25px;
+      @media screen and (max-width: 1439px) {
+        width: 50px;
+        margin: 0;
+      }
     }
     span {
       font-size: 35px;
       font-weight: bold;
       color: var(--white);
       text-align: center;
+      @media screen and (max-width: 1439px) {
+        display: none;
+      }
     }
   }
   .actions {
@@ -31,10 +42,26 @@
       width: 100%;
       height: 58px;
       cursor: pointer;
-      color: var(--white);
-      font-weight: 300;
-      padding-left: 43px;
       transition: all ease 0.4s;
+      padding-left: 20px;
+      @media screen and (max-width: 1439px) {
+        padding-left: 0;
+        justify-content: center;
+      }
+      img {
+        width: 25px;
+        margin-right: 20px;
+        @media screen and (max-width: 1439px) {
+          margin-right: 0;
+        }
+      }
+      span {
+        color: var(--white);
+        font-weight: 300;
+        @media screen and (max-width: 1439px) {
+          display: none;
+        }
+      }
       &:hover{
         background: var(--blueTwo);
       }
@@ -54,10 +81,12 @@
       border: none;
       transition: color ease 0.4s;
       font-weight: lighter;
+      @media screen and (max-width: 1439px) {
+        font-size: 14px;
+      }
       &:hover {
         color: var(--white)
       }
-
     }
   }
 }

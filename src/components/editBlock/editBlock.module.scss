@@ -6,7 +6,5 @@
 
 .action {
   display: flex;
-  button {
-    margin-left: 40px;
-  }
+  justify-content: space-between;
 }

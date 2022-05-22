@@ -8,7 +8,7 @@
     cursor: pointer;
     box-sizing: border-box;
     border-radius: 4px;
-    padding: 8px 0 8px 15px;
+    padding: 8px 15px 8px 15px;
     appearance: none;
     outline: none;
     font-weight: normal;
@@ -16,6 +16,7 @@
     letter-spacing: -0.345714px;
     transition: border ease 0.2s;
     color: var(--blackLight);
+    text-overflow: ellipsis;
     &:disabled {
       cursor: auto;
       opacity: 0.5;

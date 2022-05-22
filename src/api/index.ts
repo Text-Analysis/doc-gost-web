@@ -14,8 +14,11 @@ class Api {
         });
     }
 
-    protected async get<T>(url: string): Promise<AxiosResponse<T>> {
-        return this.instanceApi.get<T>(url);
+    protected async get<T>(
+        url: string,
+        config?: Object
+    ): Promise<AxiosResponse<T>> {
+        return this.instanceApi.get<T>(url, config);
     }
 
     protected async post<T, V>(
@@ -34,7 +37,10 @@ class Api {
         return this.instanceApi.delete(url);
     }
 
-    protected async put<T, V>(url: string, data: V): Promise<AxiosResponse<T>> {
+    protected async put<T, V>(
+        url: string,
+        data?: V
+    ): Promise<AxiosResponse<T>> {
         return this.instanceApi.put<T>(url, data);
     }
     protected async patch<T, V>(

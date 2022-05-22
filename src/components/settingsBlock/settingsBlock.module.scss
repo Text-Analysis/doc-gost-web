@@ -1,4 +1,10 @@
-.templateSection {
+.settingsBlock {
+  @media screen and (max-height: 674px) {
+    overflow-y: scroll;
+  }
+}
+
+.section {
   margin-top: 40px;
   .setting {
     display: flex;
